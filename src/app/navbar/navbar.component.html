@@ -1,20 +1,42 @@
 <nav class="navbar">
-  <div class="logo">MyApp</div>
+  <div class="logo">GrandEscape</div>
 
-  <ul>
+  <!-- Hamburger Toggle -->
+  <div class="menu-icon" (click)="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <!-- Navigation Links -->
+  <ul [class.open]="menuOpen">
     <li>
-      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+      <a
+        routerLink="/"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        (click)="closeMenu()"
+      >
         Home
       </a>
     </li>
+
     <li>
-      <a routerLink="/About" routerLinkActive="active">About</a>
+      <a routerLink="/About" routerLinkActive="active" (click)="closeMenu()">
+        About
+      </a>
     </li>
+
     <li>
-      <a routerLink="/signin" routerLinkActive="active">Login</a>
+      <a routerLink="/signin" routerLinkActive="active" (click)="closeMenu()">
+        Login
+      </a>
     </li>
+
     <li>
-      <a routerLink="/gignup" routerLinkActive="active">Register</a>
+      <a routerLink="/gignup" routerLinkActive="active" (click)="closeMenu()">
+        Register
+      </a>
     </li>
   </ul>
 </nav>

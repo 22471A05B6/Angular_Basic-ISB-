@@ -1,21 +1,41 @@
-<div class="home-container">
-  <h1>Web Portal Development for Tourism Information and Booking</h1>
+<!-- HERO SECTION -->
+<section class="hero">
+  <div class="hero-content">
+    <h1>Explore Incredible India</h1>
+    <p>Discover destinations, plan trips, and book tours effortlessly</p>
+    <a href="#destinations" class="scroll-btn">Explore Places </a>
+  </div>
+</section>
 
-  <p class="tagline">
-    Discover destinations, explore travel options, and book your journeys with ease.
-  </p>
+<!-- DESTINATIONS SECTION -->
+<section id="destinations" class="destinations">
+  <h2>Popular Places</h2>
 
-  <section class="info">
-    <p>
-      This web portal is designed to provide comprehensive tourism information
-      including popular destinations, travel packages, accommodation details,
-      and booking facilities. It helps travelers plan their trips efficiently
-      through a single, user-friendly platform.
-    </p>
+  <div class="cards-container">
+    <div
+      class="place-card"
+      *ngFor="let place of places; let i = index"
+      [class.expanded]="expandedIndex === i"
+      (click)="toggleCard(i)"
+    >
+      <img [src]="place.image" alt="{{ place.name }}" />
 
-    <p>
-      The system aims to promote tourism by offering real-time information,
-      secure bookings, and personalized travel experiences for users.
-    </p>
-  </section>
-</div>
+      <div class="card-content">
+        <h3>{{ place.name }}</h3>
+
+        <p class="description" *ngIf="expandedIndex === i">
+          {{ place.description }}
+        </p>
+
+        <span class="hint">
+          {{ expandedIndex === i ? 'Tap to close' : 'Tap to view details' }}
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- EXPLORE MORE BUTTON -->
+  <div class="explore-more">
+    <button routerLink="/destinations">Explore More Places</button>
+  </div>
+</section>

@@ -1,25 +1,160 @@
-.home-container {
-  max-width: 900px;
-  margin: 80px auto;
+/* HERO SECTION */
+.hero {
+  height: 100vh;
+  background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+    url('https://images.unsplash.com/photo-1501785888041-af3ef285b470');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-content {
+  text-align: center;
+  color: white;
   padding: 20px;
+}
+
+.hero-content h1 {
+  font-size: 52px;
+  margin-bottom: 15px;
+}
+
+.hero-content p {
+  font-size: 20px;
+  margin-bottom: 25px;
+}
+
+.scroll-btn {
+  padding: 12px 25px;
+  background-color: #1b9aaa;
+  color: white;
+  text-decoration: none;
+  border-radius: 25px;
+  font-size: 16px;
+}
+
+/* DESTINATIONS */
+.destinations {
+  padding: 60px 40px;
+  background-color: #f4f4f4;
+}
+
+.destinations h2 {
+  text-align: center;
+  margin-bottom: 40px;
+  color: #0f4c75;
+}
+
+/* CARDS LAYOUT */
+.cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 25px;
+}
+
+/* CARD */
+.place-card {
+  background: white;
+  border-radius: 14px;
+  cursor: pointer;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+  transition: all 0.35s ease;
+  overflow: hidden;
+}
+
+.place-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+/* EXPAND EFFECT */
+.place-card.expanded {
+  transform: scale(1.05);
+}
+
+/* CARD CONTENT */
+.card-content {
+  padding: 18px;
   text-align: center;
 }
 
-.home-container h1 {
-  font-size: 32px;
-  color: #1976d2;
-  margin-bottom: 20px;
+.card-content h3 {
+  color: #0f4c75;
+  margin-bottom: 8px;
 }
 
-.tagline {
-  font-size: 18px;
-  color: #555;
-  margin-bottom: 30px;
+.description {
+  font-size: 15px;
+  color: #444;
+  margin-top: 10px;
+  line-height: 1.4;
 }
 
-.info p {
+.hint {
+  display: block;
+  margin-top: 12px;
+  font-size: 13px;
+  color: #1b9aaa;
+  font-weight: 500;
+}
+
+/* EXPLORE MORE BUTTON */
+.explore-more {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.explore-more button {
+  padding: 14px 32px;
   font-size: 16px;
-  line-height: 1.7;
-  color: #333;
-  margin-bottom: 15px;
+  border-radius: 30px;
+  border: none;
+  background: linear-gradient(135deg, #1b9aaa, #0f4c75);
+  color: white;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.explore-more button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.25);
+}
+
+/* RESPONSIVE BREAKPOINTS */
+
+/* Tablets */
+@media (max-width: 768px) {
+  .hero-content h1 {
+    font-size: 38px;
+  }
+
+  .hero-content p {
+    font-size: 18px;
+  }
+
+  .destinations {
+    padding: 40px 20px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .hero {
+    height: 90vh;
+  }
+
+  .hero-content h1 {
+    font-size: 30px;
+  }
+
+  .hero-content p {
+    font-size: 16px;
+  }
+
+  .place-card img {
+    height: 180px;
+  }
 }
