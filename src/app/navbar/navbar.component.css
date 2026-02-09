@@ -1,10 +1,10 @@
 /* NAVBAR */
 .navbar {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  background: rgba(5, 151, 248, 0.95); /* Tourism Blue */
-  padding: 14px 32px;
+  justify-content: space-between;
+  background: rgba(5, 151, 248, 0.95);
+  padding: 20px clamp(20px, 6vw, 80px);
   position: sticky;
   top: 0;
   z-index: 1000;
@@ -12,56 +12,50 @@
 
 /* LOGO */
 .logo {
-  color: #ffffff;
-  font-size: 22px;
-  font-weight: bold;
-  letter-spacing: 1px;
+  color: #fff;
+  font-size: clamp(22px, 2.2vw, 30px);
+  font-weight: 800;
 }
 
-/* NAV LINKS (DESKTOP) */
+/* DESKTOP MENU */
 ul {
   list-style: none;
   display: flex;
-  gap: 24px;
+  gap: 28px;
   margin: 0;
   padding: 0;
 }
 
 ul li a {
-  color: #ffffff;
+  color: #fff;
   text-decoration: none;
-  font-size: 16px;
-  padding-bottom: 4px;
-  transition: color 0.5s ease;
+  font-size: clamp(16px, 1.1vw, 18px);
+  font-weight: 600;
+  position: relative;
 }
 
-ul li a:hover {
-  color: #ffdd57;
-}
-
+/* ACTIVE */
 a.active {
-  border-bottom: 2px solid #ffdd57;
+  border-bottom: 3px solid #ffdd57;
 }
 
-/* HAMBURGER TOGGLE */
+/* HAMBURGER */
 .menu-icon {
   display: none;
-  width: 28px;
-  height: 20px;
+  width: 32px;
+  height: 22px;
   flex-direction: column;
   justify-content: space-between;
   cursor: pointer;
 }
 
 .menu-icon span {
-  height: 3px;
-  width: 100%;
-  background-color: #ffffff; /* MATCHES NAVBAR */
+  height: 4px;
+  background: #fff;
   border-radius: 2px;
-  transition: 0.3s ease;
 }
 
-/* MOBILE VIEW */
+/* MOBILE DROPDOWN */
 @media (max-width: 768px) {
   .menu-icon {
     display: flex;
@@ -69,15 +63,16 @@ a.active {
 
   ul {
     position: absolute;
-    top: 70px;
+    top: 78px;
     right: 20px;
+    width: 240px;
     background: #ffffff;
     flex-direction: column;
-    width: 230px;
     border-radius: 14px;
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
-    max-height: 0;
+    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.25);
     overflow: hidden;
+
+    max-height: 0;
     transition: max-height 0.35s ease;
   }
 
@@ -86,9 +81,7 @@ a.active {
   }
 
   ul li {
-    padding: 14px 0;
     border-bottom: 1px solid #eee;
-    text-align: center;
   }
 
   ul li:last-child {
@@ -97,26 +90,23 @@ a.active {
 
   ul li a {
     color: #0f4c75;
-    font-weight: 600;
-  }
-
-  ul li a:hover {
-    color: #1976d2;
+    padding: 16px 0;
+    display: block;
+    text-align: center;
+    font-size: 18px;
   }
 
   a.active {
     border-bottom: none;
     color: #1976d2;
+    font-weight: 700;
   }
 }
 
 /* LARGE SCREENS */
-@media (min-width: 1200px) {
+@media (min-width: 1400px) {
   .navbar {
-    padding: 16px 70px;
-  }
-
-  ul li a {
-    font-size: 18px;
+    padding-left: 120px;
+    padding-right: 120px;
   }
 }

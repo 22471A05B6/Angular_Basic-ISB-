@@ -1,1 +1,38 @@
-<p>destinations works!</p>
+<section class="destinations-page">
+  <h1 class="page-title">Popular Tourist Destinations</h1>
+  <p class="page-subtitle">
+    Explore the most beautiful travel destinations across India
+  </p>
+
+  <!-- SEARCH BAR -->
+  <div class="search-box">
+    <input
+      type="text"
+      placeholder="Search destination..."
+      [(ngModel)]="searchText"
+    />
+    <button (click)="search()">Search</button>
+  </div>
+
+  <!-- DESTINATIONS GRID -->
+  <div class="destinations-grid">
+    <div
+      class="destination-card"
+      *ngFor="let place of filteredDestinations"
+    >
+      <!-- IMAGE -->
+      <img [src]="place.image" [alt]="place.name" />
+
+      <!-- CONTENT -->
+      <div class="card-content">
+        <h3>{{ place.name }}</h3>
+        <p>{{ place.description }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- NO RESULT MESSAGE -->
+  <p class="no-result" *ngIf="filteredDestinations.length === 0">
+    No destinations found
+  </p>
+</section>

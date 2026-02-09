@@ -9,6 +9,6 @@ export const routes: Routes = [
     { path: 'signin', component: SigninComponent},
     { path: 'gignup', component: GignupComponent } ,
     { path: 'About', component: AboutComponent },
-    { path: 'destinations', component: DestinationsComponent }
+    { path: 'dst', component: DestinationsComponent }
 
 ];
