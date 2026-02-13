@@ -1,41 +1,78 @@
 <!-- HERO SECTION -->
 <section class="hero">
+  <div class="overlay"></div>
+
   <div class="hero-content">
     <h1>Explore Incredible India</h1>
-    <p>Discover destinations, plan trips, and book tours effortlessly</p>
-    <a href="#destinations" class="scroll-btn">Explore Places </a>
+    <p>Discover destinations, book tours, and create unforgettable memories.</p>
+
+    <div class="hero-buttons">
+      <button routerLink="/dst" class="primary-btn">
+        Explore Destinations
+      </button>
+
+      <button routerLink="/booking" class="secondary-btn">
+        Book Now
+      </button>
+    </div>
   </div>
 </section>
 
-<!-- DESTINATIONS SECTION -->
-<section id="destinations" class="destinations">
-  <h2>Popular Places</h2>
-
-  <div class="cards-container">
-    <div
-      class="place-card"
-      *ngFor="let place of places; let i = index"
-      [class.expanded]="expandedIndex === i"
-      (click)="toggleCard(i)"
-    >
-      <img [src]="place.image" alt="{{ place.name }}" />
-
-      <div class="card-content">
-        <h3>{{ place.name }}</h3>
-
-        <p class="description" *ngIf="expandedIndex === i">
-          {{ place.description }}
-        </p>
-
-        <span class="hint">
-          {{ expandedIndex === i ? 'Tap to close' : 'Tap to view details' }}
-        </span>
-      </div>
+<!-- FEATURED DESTINATIONS -->
+<section class="featured">
+  <h2 class="section-title">Featured Destinations</h2>
+  <div class="card-grid">
+  <div class="destination-card">
+    <img src="https://www.thebluekite.com/ckfinder/userfiles/images/15%20Fun%20Things%20To%20Do%20In%20Palolem%20Beach%2C%20South%20Goa%20-%20Trot_World.jpg" alt="Goa">
+    <div class="card-content">
+      <h3>Goa</h3>
+      <p>Beautiful beaches and vibrant nightlife.</p>
     </div>
   </div>
 
-  <!-- EXPLORE MORE BUTTON -->
-  <div class="explore-more">
-    <button routerLink="/dst">Explore More Places</button>
+  <div class="destination-card">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQZV2iSY6QOCC3u629ibl_aoPcEV5ApowZMw&s" alt="Manali">
+    <div class="card-content">
+      <h3>Manali</h3>
+      <p>Snow-covered mountains and adventure sports.</p>
+    </div>
   </div>
+
+  <div class="destination-card">
+    <img src="https://s7ap1.scene7.com/is/image/incredibleindia/hawa-mahal-jaipur-rajasthan-city-1-hero?qlt=82&ts=1742200253577" alt="Jaipur">
+    <div class="card-content">
+      <h3>Jaipur</h3>
+      <p>Historic forts and royal heritage.</p>
+    </div>
+  </div>
+</div>
+
+</section>
+
+<!-- WHY CHOOSE US-->
+<section class="why-us">
+  <h2 class="section-title">Why Choose Us?</h2>
+
+  <div class="why-grid">
+    <div class="why-box">
+      <h3>Best Locations</h3>
+      <p>Hand-picked travel destinations.</p>
+    </div>
+
+    <div class="why-box">
+      <h3>Affordable Prices</h3>
+      <p>Budget-friendly tour packages.</p>
+    </div>
+
+    <div class="why-box">
+      <h3>Easy Booking</h3>
+      <p>Simple and secure booking system.</p>
+    </div>
+  </div>
+</section> 
+
+<!-- CTA -->
+<section class="cta">
+  <h2>Ready For Your Next Adventure?</h2>
+  <button routerLink="/booking">Start Your Journey</button>
 </section>

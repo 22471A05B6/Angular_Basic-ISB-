@@ -1,35 +1,122 @@
-.about-container {
-  max-width: 900px;
-  margin: 80px auto;
-  padding: 20px;
+/* HERO SECTION */
+.about-hero {
+  height: 60vh;
+  background: url('https://entrepreneuronemedia.com/wp-content/uploads/2022/04/blog-cover1.jpg') center/cover no-repeat;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
 }
 
-.about-container h1 {
-  text-align: center;
-  color: #1976d2;
-  margin-bottom: 20px;
+.about-hero .overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
 }
 
-.intro {
-  text-align: center;
+.about-hero-content {
+  position: relative;
+  z-index: 2;
+}
+
+.about-hero h1 {
+  font-size: clamp(28px, 5vw, 48px);
+}
+
+.about-hero p {
+  margin-top: 10px;
   font-size: 18px;
-  color: #555;
-  margin-bottom: 30px;
 }
 
-section {
-  margin-bottom: 25px;
+/* CONTENT SECTION */
+.about-content {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  padding: 80px 8%;
 }
 
-section h2 {
-  color: #333;
+.about-text {
+  flex: 1;
+}
+
+.about-text h2 {
   margin-bottom: 10px;
+  margin-top: 20px;
 }
 
-ul {
-  margin-left: 20px;
+.about-text p {
+  margin-bottom: 15px;
+  line-height: 1.6;
 }
 
-li {
+.about-text ul {
+  margin-top: 10px;
+}
+
+.about-text li {
   margin-bottom: 8px;
+}
+
+.about-image {
+  flex: 1;
+}
+
+.about-image img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+/* TEAM SECTION */
+.team-section {
+  padding: 80px 8%;
+  background: #f5f5f5;
+  text-align: center;
+}
+
+.section-title {
+  margin-bottom: 40px;
+  font-size: clamp(24px, 4vw, 32px);
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 25px;
+}
+
+.team-card {
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+  transition: 0.3s;
+}
+
+.team-card:hover {
+  transform: translateY(-8px);
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .about-content {
+    flex-direction: column;
+    padding: 60px 5%;
+  }
+
+  .about-hero {
+    height: 50vh;
+  }
+}
+
+@media (max-width: 480px) {
+  .about-hero {
+    height: 45vh;
+  }
+
+  .about-content {
+    padding: 40px 5%;
+  }
 }

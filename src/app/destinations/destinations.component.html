@@ -1,38 +1,101 @@
-<section class="destinations-page">
-  <h1 class="page-title">Popular Tourist Destinations</h1>
-  <p class="page-subtitle">
-    Explore the most beautiful travel destinations across India
-  </p>
+<div class="destinations-page">
 
-  <!-- SEARCH BAR -->
-  <div class="search-box">
-    <input
-      type="text"
-      placeholder="Search destination..."
-      [(ngModel)]="searchText"
-    />
-    <button (click)="search()">Search</button>
-  </div>
+  <!-- SIDEBAR FILTER -->
+  <aside class="sidebar">
 
-  <!-- DESTINATIONS GRID -->
-  <div class="destinations-grid">
-    <div
-      class="destination-card"
-      *ngFor="let place of filteredDestinations"
-    >
-      <!-- IMAGE -->
-      <img [src]="place.image" [alt]="place.name" />
+    <h2>🌍 Discover</h2>
 
-      <!-- CONTENT -->
-      <div class="card-content">
-        <h3>{{ place.name }}</h3>
-        <p>{{ place.description }}</p>
+    <div class="filter-section">
+      <h4>Destination Type</h4>
+
+      <div class="chip-container">
+        <button 
+          class="chip"
+          [class.active]="selectedType === 'All'"
+          (click)="filterByType('All')">
+          All
+        </button>
+
+        <button
+          class="chip"
+          *ngFor="let t of destinationTypes"
+          [class.active]="selectedType === t"
+          (click)="filterByType(t)">
+          {{ t }}
+        </button>
       </div>
     </div>
+
+    <div class="filter-section">
+      <h4>Popularity</h4>
+
+      <button class="pop-btn high"
+        [class.active]="selectedPopularity === 'High'"
+        (click)="filterByPopularity('High')">
+        🔥 High
+      </button>
+
+      <button class="pop-btn medium"
+        [class.active]="selectedPopularity === 'Medium'"
+        (click)="filterByPopularity('Medium')">
+        ⭐ Medium
+      </button>
+
+      <button class="pop-btn low"
+        [class.active]="selectedPopularity === 'Low'"
+        (click)="filterByPopularity('Low')">
+        🌱 Low
+      </button>
+
+      <button class="clear-btn" (click)="clearFilters()">
+        Reset Filters
+      </button>
+    </div>
+
+  </aside>
+
+  <!-- DESTINATION CARDS -->
+  <section class="grid" [class.card-active]="expandedIndex !== null">
+
+  <div 
+    class="card"
+    *ngFor="let d of filteredDestinations; let i = index"
+    [class.expanded]="expandedIndex === i"
+    [class.faded]="expandedIndex !== null && expandedIndex !== i"
+    (click)="toggleCard(i)"
+  >
+
+    <img [src]="d.image" alt="{{ d.name }}">
+
+    <div class="info">
+      <h3>{{ d.name }}</h3>
+
+      <p>
+        {{ expandedIndex === i 
+            ? d.description + ' This destination offers cultural experiences, adventure activities, beautiful scenery and unforgettable memories.'
+            : d.description }}
+      </p>
+
+      <div class="tags">
+        <span class="type">{{ d.type }}</span>
+        <span class="pop">{{ d.popularity }}</span>
+      </div>
+
+      <button 
+  *ngIf="expandedIndex === i"
+  class="book-btn"
+  (click)="$event.stopPropagation()"
+  routerLink="/booking">
+  Book Now
+</button>
+
+
+
+    </div>
+
   </div>
 
-  <!-- NO RESULT MESSAGE -->
-  <p class="no-result" *ngIf="filteredDestinations.length === 0">
-    No destinations found
-  </p>
 </section>
+
+
+</div>
