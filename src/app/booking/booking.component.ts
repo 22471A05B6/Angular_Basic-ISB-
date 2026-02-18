@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { BookingService } from '../services/booking.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-booking',
@@ -10,14 +11,27 @@ import { CommonModule } from '@angular/common';
   templateUrl: './booking.component.html',
   styleUrls: ['./booking.component.css']
 })
-export class BookingComponent {
+export class BookingComponent implements OnInit {
 
   destinations = [
-    'Goa',
-    'Manali',
+    'Udaipur',
+    'Lakshadweep',
+    'Kodaikanal',
+    'Taj Mahal, Agra',
+    'Darjeeling',
     'Jaipur',
-    'Andaman',
-    'Mysore'
+    'Manali',
+    'Varanasi',
+    'Ooty',
+    'Mysore Palace',
+    'Charminar, Hyderabad',
+    'Golden Temple, Amritsar',
+    'Goa Beaches',
+    'Coorg',
+    'Hampi',
+    'Mount Abu',
+    'Rishikesh',
+    'Andaman & Nicobar'
   ];
 
   tours = [
@@ -28,15 +42,50 @@ export class BookingComponent {
 
   successMessage = '';
 
-  constructor(private bookingService: BookingService) {}
+  selectedDestination: string = '';
+  selectedPrice: number | null = null;
 
+  constructor(
+    private bookingService: BookingService,
+    private route: ActivatedRoute
+  ) {}
+
+  // ✅ Auto-fill from destination page
+  ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      if (params['destination']) {
+        this.selectedDestination = params['destination'];
+      }
+
+      if (params['price']) {
+        this.selectedPrice = +params['price'];
+      }
+    });
+  }
+
+  // ✅ Submit booking
   submitForm(form: any) {
+
     if (form.valid) {
-      const response = this.bookingService.submitBooking(form.value);
+
+      const bookingData = {
+        ...form.value,
+        destination: this.selectedDestination || form.value.destination,
+        price: this.selectedPrice
+      };
+
+      const response = this.bookingService.submitBooking(bookingData);
 
       if (response.success) {
+
+        // 🎉 Popup
+        alert("🎉 Booking Successful!");
+
         this.successMessage = response.message;
+
         form.reset();
+        this.selectedDestination = '';
+        this.selectedPrice = null;
       }
     }
   }

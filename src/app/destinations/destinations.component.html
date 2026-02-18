@@ -123,13 +123,14 @@
           ₹ {{ d.price | number }}
         </div>
 
-        <button 
-          *ngIf="expandedIndex === i"
-          class="book-btn"
-          (click)="$event.stopPropagation()"
-          routerLink="/booking">
-          Book Now
-        </button>
+      <button 
+  *ngIf="expandedIndex === i"
+  class="book-btn"
+  (click)="goToBooking(d, $event)">
+  Book Now
+</button>
+
+        
 
       </div>
     </div>

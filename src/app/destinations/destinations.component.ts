@@ -2,6 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-destinations',
@@ -12,7 +14,11 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 })
 export class DestinationsComponent implements OnInit {
 
-  constructor(private http: HttpClient) {}
+  constructor(
+  private http: HttpClient,
+  private router: Router
+) {}
+
 
   // 🔑 Replace with your Geoapify API key
   apiKey = '5227aad2da1f4d59ba31c3da65d6a133';
@@ -256,6 +262,17 @@ export class DestinationsComponent implements OnInit {
       this.loadPlaces(selected.name);
     }
   }
+  goToBooking(destination: any, event: Event) {
+  event.stopPropagation();
+
+  this.router.navigate(['/booking'], {
+    queryParams: {
+      destination: destination.name,
+      price: destination.price
+    }
+  });
+}
+
 
   closeCard(event: Event) {
     event.stopPropagation();

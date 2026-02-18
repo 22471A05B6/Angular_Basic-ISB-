@@ -6,13 +6,27 @@ import { Injectable } from '@angular/core';
 export class BookingService {
 
   submitBooking(data: any) {
-    console.log('Booking Submitted:', data);
 
-    // Mock API response simulation
-    return {
-      success: true,
-      message: 'Booking Successful!'
-    };
-  }
+  console.log("Saving to LocalStorage:", data); // 👈 Add this
+
+  const existingBookings = JSON.parse(
+    localStorage.getItem('bookings') || '[]'
+  );
+
+  existingBookings.push(data);
+
+  localStorage.setItem(
+    'bookings',
+    JSON.stringify(existingBookings)
+  );
+
+  console.log("Current LocalStorage:", localStorage.getItem('bookings')); // 👈 Add this
+
+  return {
+    success: true,
+    message: 'Booking Successful!'
+  };
+}
+
 
 }

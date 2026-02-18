@@ -4,13 +4,14 @@
   <form #bookingForm="ngForm" (ngSubmit)="submitForm(bookingForm)">
 
     <!-- Destination -->
-    <label>Destination</label>
-    <select name="destination" ngModel required>
-      <option value="">Select Destination</option>
-      <option *ngFor="let d of destinations" [value]="d">
-        {{ d }}
-      </option>
-    </select>
+    <select name="destination" [(ngModel)]="selectedDestination" required>
+  <option value="">Select Destination</option>
+  <option *ngFor="let d of destinations" [value]="d">
+    {{ d }}
+  </option>
+</select>
+
+
 
     <!-- Tour Type -->
     <label>Tour Package</label>
@@ -36,6 +37,7 @@
     <!-- Email -->
     <label>Email</label>
     <input type="email" name="email" ngModel required email>
+    <input type="text" [value]="selectedPrice" readonly *ngIf="selectedPrice">
 
     <button type="submit" [disabled]="bookingForm.invalid">
       Confirm Booking
