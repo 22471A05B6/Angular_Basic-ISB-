@@ -1,10 +1,10 @@
 <div class="destinations-page">
 
-  <!-- SIDEBAR FILTER -->
   <aside class="sidebar">
 
     <h2>🌍 Discover</h2>
 
+    <!-- TYPE -->
     <div class="filter-section">
       <h4>Destination Type</h4>
 
@@ -27,21 +27,50 @@
     </div>
 
     <div class="filter-section">
+  <h4>Package Type</h4>
+
+  <div class="package-container">
+    <button 
+      class="package-btn"
+      [class.active]="selectedPackage === 'Standard'"
+      (click)="filterByPackage('Standard')">
+      Standard
+    </button>
+
+    <button 
+      class="package-btn"
+      [class.active]="selectedPackage === 'Premium'"
+      (click)="filterByPackage('Premium')">
+      Premium
+    </button>
+
+    <button 
+      class="package-btn"
+      [class.active]="selectedPackage === 'Luxury'"
+      (click)="filterByPackage('Luxury')">
+      Luxury
+    </button>
+  </div>
+</div>
+
+
+    <!-- POPULARITY -->
+    <div class="filter-section">
       <h4>Popularity</h4>
 
-      <button class="pop-btn high"
+      <button class="pop-btn"
         [class.active]="selectedPopularity === 'High'"
         (click)="filterByPopularity('High')">
         🔥 High
       </button>
 
-      <button class="pop-btn medium"
+      <button class="pop-btn"
         [class.active]="selectedPopularity === 'Medium'"
         (click)="filterByPopularity('Medium')">
         ⭐ Medium
       </button>
 
-      <button class="pop-btn low"
+      <button class="pop-btn"
         [class.active]="selectedPopularity === 'Low'"
         (click)="filterByPopularity('Low')">
         🌱 Low
@@ -54,48 +83,57 @@
 
   </aside>
 
-  <!-- DESTINATION CARDS -->
+  <!-- CARDS -->
   <section class="grid" [class.card-active]="expandedIndex !== null">
 
-  <div 
-    class="card"
-    *ngFor="let d of filteredDestinations; let i = index"
-    [class.expanded]="expandedIndex === i"
-    [class.faded]="expandedIndex !== null && expandedIndex !== i"
-    (click)="toggleCard(i)"
-  >
+    <div 
+      class="card"
+      *ngFor="let d of filteredDestinations; let i = index"
+      [class.expanded]="expandedIndex === i"
+      [class.faded]="expandedIndex !== null && expandedIndex !== i"
+      (click)="toggleCard(i)"
+    >
 
-    <img [src]="d.image" alt="{{ d.name }}">
+      <div class="image-container">
+        <img [src]="d.image" alt="{{ d.name }}">
 
-    <div class="info">
-      <h3>{{ d.name }}</h3>
-
-      <p>
-        {{ expandedIndex === i 
-            ? d.description + ' This destination offers cultural experiences, adventure activities, beautiful scenery and unforgettable memories.'
-            : d.description }}
-      </p>
-
-      <div class="tags">
-        <span class="type">{{ d.type }}</span>
-        <span class="pop">{{ d.popularity }}</span>
+        <div 
+          *ngIf="expandedIndex === i"
+          class="back-arrow"
+          (click)="closeCard($event)">
+          ←
+        </div>
       </div>
 
-      <button 
-  *ngIf="expandedIndex === i"
-  class="book-btn"
-  (click)="$event.stopPropagation()"
-  routerLink="/booking">
-  Book Now
-</button>
+      <div class="info">
+        <h3>{{ d.name }}</h3>
 
+        <p>
+          {{ expandedIndex === i 
+              ? d.description + ' This destination offers unforgettable memories.'
+              : d.description }}
+        </p>
 
+        <div class="tags">
+          <span class="type">{{ d.type }}</span>
+          <span class="pop">{{ d.popularity }}</span>
+        </div>
 
+        <div class="price">
+          ₹ {{ d.price | number }}
+        </div>
+
+        <button 
+          *ngIf="expandedIndex === i"
+          class="book-btn"
+          (click)="$event.stopPropagation()"
+          routerLink="/booking">
+          Book Now
+        </button>
+
+      </div>
     </div>
 
-  </div>
-
-</section>
-
+  </section>
 
 </div>
