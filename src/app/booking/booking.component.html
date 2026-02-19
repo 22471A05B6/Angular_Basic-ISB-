@@ -1,51 +1,140 @@
 <div class="booking-container">
-  <h2>Book Your Tour 🌍</h2>
+  <h2>Book Your Trip</h2>
 
   <form #bookingForm="ngForm" (ngSubmit)="submitForm(bookingForm)">
 
-    <!-- Destination -->
-    <select name="destination" [(ngModel)]="selectedDestination" required>
-  <option value="">Select Destination</option>
-  <option *ngFor="let d of destinations" [value]="d">
-    {{ d }}
-  </option>
-</select>
+    <!-- NAME -->
+    <input type="text"
+           name="name"
+           [(ngModel)]="booking.name"
+           #name="ngModel"
+           required
+           minlength="3"
+           placeholder="Full Name">
+
+    <div class="error" *ngIf="name.invalid && name.touched">
+      <div *ngIf="name.errors?.['required']">
+        Name is required.
+      </div>
+      <div *ngIf="name.errors?.['minlength']">
+        Minimum 3 characters required.
+      </div>
+    </div>
 
 
+    <!-- EMAIL -->
+    <input type="email"
+           name="email"
+           [(ngModel)]="booking.email"
+           #email="ngModel"
+           required
+           email
+           placeholder="Email">
 
-    <!-- Tour Type -->
-    <label>Tour Package</label>
-    <select name="tour" ngModel required>
-      <option value="">Select Tour</option>
-      <option *ngFor="let t of tours" [value]="t">
-        {{ t }}
+    <div class="error" *ngIf="email.invalid && email.touched">
+      <div *ngIf="email.errors?.['required']">
+        Email is required.
+      </div>
+      <div *ngIf="email.errors?.['email']">
+        Enter a valid email address.
+      </div>
+    </div>
+
+
+    <!-- PHONE -->
+    <input type="tel"
+           name="phone"
+           [(ngModel)]="booking.phone"
+           #phone="ngModel"
+           required
+           pattern="^[0-9]{10}$"
+           placeholder="Phone Number (10 digits)">
+
+    <div class="error" *ngIf="phone.invalid && phone.touched">
+      <div *ngIf="phone.errors?.['required']">
+        Phone number is required.
+      </div>
+      <div *ngIf="phone.errors?.['pattern']">
+        Phone number must be exactly 10 digits.
+      </div>
+    </div>
+
+
+    <!-- DESTINATION -->
+    <select name="destination"
+            [(ngModel)]="booking.destination"
+            #destination="ngModel"
+            required
+            (change)="updatePrice()">
+
+      <option value="">Select Destination</option>
+      <option *ngFor="let dest of destinations"
+              [value]="dest.name">
+        {{ dest.name }}
       </option>
     </select>
 
-    <!-- Date -->
-    <label>Travel Date</label>
-    <input type="date" name="date" ngModel required>
+    <div class="error" *ngIf="destination.invalid && destination.touched">
+      Destination selection is required.
+    </div>
 
-    <!-- People -->
-    <label>Number of People</label>
-    <input type="number" name="people" ngModel min="1" required>
 
-    <!-- Name -->
-    <label>Your Name</label>
-    <input type="text" name="name" ngModel required minlength="3">
+    <!-- PRICE -->
+    <div *ngIf="selectedPrice > 0" class="highlighted-price">
+      Price per Person: ₹{{ selectedPrice }}
+    </div>
 
-    <!-- Email -->
-    <label>Email</label>
-    <input type="email" name="email" ngModel required email>
-    <input type="text" [value]="selectedPrice" readonly *ngIf="selectedPrice">
 
-    <button type="submit" [disabled]="bookingForm.invalid">
-      Confirm Booking
+    <!-- DATE -->
+    <input type="date"
+           name="date"
+           [(ngModel)]="booking.date"
+           #date="ngModel"
+           [min]="minDate"
+           required>
+
+    <div class="error" *ngIf="date.invalid && date.touched">
+      Travel date is required.
+    </div>
+
+
+    <!-- PERSONS -->
+    <input type="number"
+           name="persons"
+           [(ngModel)]="booking.persons"
+           #persons="ngModel"
+           min="1"
+           required
+           (input)="calculateTotal()"
+           placeholder="Number of Persons">
+
+    <div class="error" *ngIf="persons.invalid && persons.touched">
+      <div *ngIf="persons.errors?.['required']">
+        Number of persons is required.
+      </div>
+      <div *ngIf="persons.errors?.['min']">
+        Minimum 1 person required.
+      </div>
+    </div>
+
+
+    <!-- TOTAL -->
+    <div *ngIf="totalAmount > 0" class="total-box">
+      Total Amount: ₹{{ totalAmount }}
+    </div>
+
+
+    <!-- SUBMIT -->
+    <button type="submit">
+      Book Now
     </button>
 
-  </form>
 
-  <div class="success-message" *ngIf="successMessage">
-    {{ successMessage }}
-  </div>
+    <!-- SUCCESS -->
+    <div *ngIf="successMessage"
+         class="success">
+      {{ successMessage }}
+    </div>
+
+  </form>
 </div>

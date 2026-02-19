@@ -1,0 +1,48 @@
+<div class="details-page" *ngIf="destination">
+
+  <!-- BACK BUTTON -->
+  <div class="back-btn" (click)="goBack()">
+    ← Back to Explore
+  </div>
+
+  <!-- IMAGE -->
+  <img [src]="destination.image" class="hero-image">
+
+  <h1>{{ destination.name }}</h1>
+
+  <p class="description">
+    {{ destination.description }}
+  </p>
+
+  <div class="info-box">
+    <p><strong>Type:</strong> {{ destination.type }}</p>
+    <p><strong>Popularity:</strong> {{ destination.popularity }}</p>
+    <p><strong>Budget:</strong> ₹ {{ destination.price | number }}</p>
+    <p><strong>Location:</strong> {{ destination.name }}, India</p>
+  </div>
+  <button class="book-btn" (click)="bookNow()">
+      Book Now
+    </button>
+  
+
+  
+
+  <div *ngIf="loading">Loading nearby places...</div>
+
+  <!-- HOSTELS -->
+  <div class="section">
+    <h3>Nearby Hostels</h3>
+    <div *ngFor="let h of nearbyHostels" class="place-card">
+      {{ h.properties.name }}
+    </div>
+  </div>
+
+  <!-- ATTRACTIONS -->
+  <div class="section">
+    <h3>Nearby Attractions</h3>
+    <div *ngFor="let p of nearbyAttractions" class="place-card">
+      {{ p.properties.name }}
+    </div>
+  </div>
+
+</div>

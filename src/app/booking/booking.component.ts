@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { BookingService } from '../services/booking.service';
-import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { DestinationService, Destination } from '../services/destination.service';
 
 @Component({
   selector: 'app-booking',
@@ -13,81 +12,79 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class BookingComponent implements OnInit {
 
-  destinations = [
-    'Udaipur',
-    'Lakshadweep',
-    'Kodaikanal',
-    'Taj Mahal, Agra',
-    'Darjeeling',
-    'Jaipur',
-    'Manali',
-    'Varanasi',
-    'Ooty',
-    'Mysore Palace',
-    'Charminar, Hyderabad',
-    'Golden Temple, Amritsar',
-    'Goa Beaches',
-    'Coorg',
-    'Hampi',
-    'Mount Abu',
-    'Rishikesh',
-    'Andaman & Nicobar'
-  ];
+  destinations: Destination[] = [];
 
-  tours = [
-    'Standard Package',
-    'Premium Package',
-    'Luxury Package'
-  ];
+  booking = {
+    name: '',
+    email: '',
+    phone: '',
+    destination: '',
+    date: '',
+    persons: 1
+  };
 
+  selectedPrice = 0;
+  totalAmount = 0;
+  minDate = '';
   successMessage = '';
 
-  selectedDestination: string = '';
-  selectedPrice: number | null = null;
+  constructor(private service: DestinationService) {}
 
-  constructor(
-    private bookingService: BookingService,
-    private route: ActivatedRoute
-  ) {}
+  ngOnInit(): void {
+    this.destinations = this.service.getDestinations();
 
-  // ✅ Auto-fill from destination page
-  ngOnInit() {
-    this.route.queryParams.subscribe(params => {
-      if (params['destination']) {
-        this.selectedDestination = params['destination'];
-      }
-
-      if (params['price']) {
-        this.selectedPrice = +params['price'];
-      }
-    });
+    const today = new Date();
+    this.minDate = today.toISOString().split('T')[0];
   }
 
-  // ✅ Submit booking
-  submitForm(form: any) {
+  updatePrice() {
+    const selected = this.destinations.find(
+      d => d.name === this.booking.destination
+    );
 
-    if (form.valid) {
+    this.selectedPrice = selected ? selected.price : 0;
+    this.calculateTotal();
+  }
 
-      const bookingData = {
-        ...form.value,
-        destination: this.selectedDestination || form.value.destination,
-        price: this.selectedPrice
-      };
-
-      const response = this.bookingService.submitBooking(bookingData);
-
-      if (response.success) {
-
-        // 🎉 Popup
-        alert("🎉 Booking Successful!");
-
-        this.successMessage = response.message;
-
-        form.reset();
-        this.selectedDestination = '';
-        this.selectedPrice = null;
-      }
+  calculateTotal() {
+    if (this.selectedPrice && this.booking.persons) {
+      this.totalAmount = this.selectedPrice * this.booking.persons;
+    } else {
+      this.totalAmount = 0;
     }
   }
 
+  submitForm(form: any) {
+
+    if (form.invalid) {
+      return;
+    }
+
+    console.log("Booking Data:", this.booking);
+
+    this.successMessage = "✅ Booking Submitted Successfully!";
+
+    // Reset model
+    this.booking = {
+      name: '',
+      email: '',
+      phone: '',
+      destination: '',
+      date: '',
+      persons: 1
+    };
+
+    this.selectedPrice = 0;
+    this.totalAmount = 0;
+
+    // Reset form state
+    form.resetForm({
+      persons: 1
+    });
+
+    // Optional: auto hide success after 3 sec
+    setTimeout(() => {
+      this.successMessage = '';
+    }, 3000);
+  }
 }

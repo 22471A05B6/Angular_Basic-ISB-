@@ -5,12 +5,14 @@ import { GignupComponent } from './gignup/gignup.component';
 import { AboutComponent } from './about/about.component';
 import { DestinationsComponent } from './destinations/destinations.component';
 import { BookingComponent } from './booking/booking.component';
+import { DestinationDetailsComponent } from './destination-details/destination-details.component';
 export const routes: Routes = [
     {path:'',component:HomeComponent  },
     { path: 'signin', component: SigninComponent},
     { path: 'gignup', component: GignupComponent } ,
     { path: 'About', component: AboutComponent },
     { path: 'dst', component: DestinationsComponent },
-    { path: 'booking', component: BookingComponent}
+    { path: 'booking', component: BookingComponent},
+    { path: 'destination-details', component: DestinationDetailsComponent }
 
 ];
