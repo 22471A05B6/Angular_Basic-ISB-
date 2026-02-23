@@ -137,4 +137,51 @@
     </div>
 
   </form>
+  <!-- ✅ Confirmation Dialog -->
+<div class="dialog-overlay" *ngIf="showDialog">
+
+  <div class="dialog-box">
+
+    <h3>Confirm Your Booking</h3>
+
+    <p>Are you sure you want to confirm this booking?</p>
+
+    <div class="dialog-details">
+      <p><strong>Destination:</strong> {{ booking.destination }}</p>
+      <p><strong>Date:</strong> {{ booking.date }}</p>
+      <p><strong>Persons:</strong> {{ booking.persons }}</p>
+      <p><strong>Total Amount:</strong> ₹{{ totalAmount }}</p>
+    </div>
+
+    <div class="dialog-buttons">
+      <button class="confirm-btn" (click)="confirmBooking()">
+        Confirm
+      </button>
+
+      <button class="cancel-btn" (click)="showDialog = false">
+        Cancel
+      </button>
+    </div>
+
+  </div>
+</div>
+  <!-- Submitted Bookings Section -->
+<div *ngIf="submittedBookings.length > 0" class="submitted-section">
+
+  <h3>Your Bookings</h3>
+
+  <div *ngFor="let booking of submittedBookings" class="booking-card">
+
+    <p><strong>Name:</strong> {{ booking.name }}</p>
+    <p><strong>Email:</strong> {{ booking.email }}</p>
+    <p><strong>Phone:</strong> {{ booking.phone }}</p>
+    <p><strong>Destination:</strong> {{ booking.destination }}</p>
+    <p><strong>Date:</strong> {{ booking.date }}</p>
+    <p><strong>Persons:</strong> {{ booking.persons }}</p>
+    <p><strong>Total Amount:</strong> ₹{{ booking.totalAmount }}</p>
+
+  </div>
+
+</div>
+
 </div>

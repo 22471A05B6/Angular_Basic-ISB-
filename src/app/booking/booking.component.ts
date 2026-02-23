@@ -13,6 +13,9 @@ import { DestinationService, Destination } from '../services/destination.service
 export class BookingComponent implements OnInit {
 
   destinations: Destination[] = [];
+  submittedBookings: any[] = [];
+
+  showDialog = false;   // ✅ Dialog control
 
   booking = {
     name: '',
@@ -47,24 +50,38 @@ export class BookingComponent implements OnInit {
   }
 
   calculateTotal() {
-    if (this.selectedPrice && this.booking.persons) {
+    if (this.selectedPrice && this.booking.persons > 0) {
       this.totalAmount = this.selectedPrice * this.booking.persons;
     } else {
       this.totalAmount = 0;
     }
   }
 
+  // ✅ First step: show dialog only
   submitForm(form: any) {
 
     if (form.invalid) {
       return;
     }
 
-    console.log("Booking Data:", this.booking);
+    this.showDialog = true;   // Open confirmation dialog
+  }
 
-    this.successMessage = "✅ Booking Submitted Successfully!";
+  // ✅ Final confirmation
+  confirmBooking() {
 
-    // Reset model
+    const newBooking = {
+      ...this.booking,
+      totalAmount: this.totalAmount
+    };
+
+    this.submittedBookings.push(newBooking);
+
+    this.successMessage = "✅ Booking Confirmed Successfully!";
+
+    this.showDialog = false;
+
+    // Reset form
     this.booking = {
       name: '',
       email: '',
@@ -77,14 +94,9 @@ export class BookingComponent implements OnInit {
     this.selectedPrice = 0;
     this.totalAmount = 0;
 
-    // Reset form state
-    form.resetForm({
-      persons: 1
-    });
-
-    // Optional: auto hide success after 3 sec
     setTimeout(() => {
       this.successMessage = '';
     }, 3000);
   }
+
 }
