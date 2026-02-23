@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { DestinationService, Destination } from '../services/destination.service';
 
 @Component({
@@ -15,7 +15,8 @@ export class BookingComponent implements OnInit {
   destinations: Destination[] = [];
   submittedBookings: any[] = [];
 
-  showDialog = false;   // ✅ Dialog control
+  showDialog = false;
+  toastMessage = '';
 
   booking = {
     name: '',
@@ -29,11 +30,11 @@ export class BookingComponent implements OnInit {
   selectedPrice = 0;
   totalAmount = 0;
   minDate = '';
-  successMessage = '';
 
   constructor(private service: DestinationService) {}
 
   ngOnInit(): void {
+
     this.destinations = this.service.getDestinations();
 
     const today = new Date();
@@ -41,34 +42,38 @@ export class BookingComponent implements OnInit {
   }
 
   updatePrice() {
+
     const selected = this.destinations.find(
       d => d.name === this.booking.destination
     );
 
     this.selectedPrice = selected ? selected.price : 0;
+
     this.calculateTotal();
   }
 
   calculateTotal() {
-    if (this.selectedPrice && this.booking.persons > 0) {
+
+    if (this.selectedPrice > 0 && this.booking.persons > 0) {
       this.totalAmount = this.selectedPrice * this.booking.persons;
     } else {
       this.totalAmount = 0;
     }
   }
 
-  // ✅ First step: show dialog only
-  submitForm(form: any) {
+  // Step 1: Open dialog
+  submitForm(form: NgForm) {
 
     if (form.invalid) {
+      form.control.markAllAsTouched();
       return;
     }
 
-    this.showDialog = true;   // Open confirmation dialog
+    this.showDialog = true;
   }
 
-  // ✅ Final confirmation
-  confirmBooking() {
+  // Step 2: Confirm booking
+  confirmBooking(form: NgForm) {
 
     const newBooking = {
       ...this.booking,
@@ -77,25 +82,37 @@ export class BookingComponent implements OnInit {
 
     this.submittedBookings.push(newBooking);
 
-    this.successMessage = "✅ Booking Confirmed Successfully!";
-
     this.showDialog = false;
 
-    // Reset form
-    this.booking = {
+    this.showToast("🎉 Booking Confirmed Successfully!");
+
+    // Proper full reset
+    form.resetForm({
       name: '',
       email: '',
       phone: '',
       destination: '',
       date: '',
       persons: 1
-    };
+    });
 
     this.selectedPrice = 0;
     this.totalAmount = 0;
+  }
+
+  // Cancel booking
+  cancelBooking() {
+    this.showDialog = false;
+    this.showToast("❌ Booking Cancelled");
+  }
+
+  // Toast function
+  showToast(message: string) {
+
+    this.toastMessage = message;
 
     setTimeout(() => {
-      this.successMessage = '';
+      this.toastMessage = '';
     }, 3000);
   }
 
