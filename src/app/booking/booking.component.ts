@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { DestinationService, Destination } from '../services/destination.service';
+import { BookingService } from '../services/booking.service'; // ✅ Import
 
 @Component({
   selector: 'app-booking',
@@ -13,7 +14,6 @@ import { DestinationService, Destination } from '../services/destination.service
 export class BookingComponent implements OnInit {
 
   destinations: Destination[] = [];
-  submittedBookings: any[] = [];
 
   showDialog = false;
   toastMessage = '';
@@ -31,7 +31,11 @@ export class BookingComponent implements OnInit {
   totalAmount = 0;
   minDate = '';
 
-  constructor(private service: DestinationService) {}
+  // ✅ Inject BOTH services
+  constructor(
+    private service: DestinationService,
+    private bookingService: BookingService
+  ) {}
 
   ngOnInit(): void {
 
@@ -64,49 +68,97 @@ export class BookingComponent implements OnInit {
   // Step 1: Open dialog
   submitForm(form: NgForm) {
 
+    // if (form.invalid) {
+    //   form.control.markAllAsTouched();
+    //   return;
+    // }
+
+    // this.showDialog = true;
     if (form.invalid) {
-      form.control.markAllAsTouched();
-      return;
-    }
 
-    this.showDialog = true;
-  }
-
-  // Step 2: Confirm booking
-  confirmBooking(form: NgForm) {
-
-    const newBooking = {
-      ...this.booking,
-      totalAmount: this.totalAmount
+    // Simulated API response for validation error
+    const response = {
+      status: 422, // 422 Unprocessable Entity
+      success: false,
+      message: "Validation Failed! Please fill all required fields correctly."
     };
 
-    this.submittedBookings.push(newBooking);
+    console.log("API Response:", response);
+    console.log("Status Code:", response.status);
 
-    this.showDialog = false;
+    // Highlight form errors
+    form.control.markAllAsTouched();
 
-    this.showToast("🎉 Booking Confirmed Successfully!");
+    // Show toast
+    this.showToast(`❌ ${response.message} `);
+    console.log("Validation Failed! Please fill all required fields correctly.");
 
-    // Proper full reset
-    form.resetForm({
-      name: '',
-      email: '',
-      phone: '',
-      destination: '',
-      date: '',
-      persons: 1
-    });
-
-    this.selectedPrice = 0;
-    this.totalAmount = 0;
+    return;
   }
 
-  // Cancel booking
+  // ✅ Open confirmation popup if form is valid
+  this.showDialog = true;
+  }
+
+  // ✅ Step 2: Confirm booking (ONLY ONE METHOD NOW)
+  confirmBooking(form: NgForm) {
+
+    const bookingData = {
+      ...this.booking,
+      pricePerPerson: this.selectedPrice,
+      totalAmount: this.totalAmount,
+      bookingDate: new Date()
+    };
+
+    const response = this.bookingService.submitBooking(bookingData);
+    console.log("API Response:", response);
+    console.log("Status Code:", response.status);
+    // ✅ Status 200
+    if (response.status === 200) {
+      console.log("✅ Success - Data Stored in LocalStorage");
+
+      this.showToast(`✅ ${response.message}`);
+
+      // Reset form properly
+      form.resetForm({
+        name: '',
+        email: '',
+        phone: '',
+        destination: '',
+        date: '',
+        persons: 1
+      });
+
+      this.selectedPrice = 0;
+      this.totalAmount = 0;
+    }
+
+    // ❌ Status 404
+    else if (response.status === 404) {
+      console.log("❌ Error - Booking Failed");
+      this.showToast(`❌ ${response.message} (Status: ${response.status})`);
+    }
+
+    this.showDialog = false;
+  }
+
   cancelBooking() {
-    this.showDialog = false;
-    this.showToast("❌ Booking Cancelled");
-  }
 
-  // Toast function
+  const response = {
+    status: 400,
+    success: false,
+    message: "Booking Cancelled by User"
+  };
+
+  console.log("API Response:", response);
+  console.log("Status Code:", response.status);
+  console.log("⚠ Booking Cancelled");
+
+  this.showDialog = false;
+
+  this.showToast(`❌ ${response.message} (Status: ${response.status})`);
+}
+
   showToast(message: string) {
 
     this.toastMessage = message;
@@ -115,5 +167,4 @@ export class BookingComponent implements OnInit {
       this.toastMessage = '';
     }, 3000);
   }
-
 }
