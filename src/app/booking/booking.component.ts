@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { DestinationService, Destination } from '../services/destination.service';
-import { BookingService } from '../services/booking.service'; // ✅ Import
+import { BookingService } from '../services/booking.service';
 
 @Component({
   selector: 'app-booking',
@@ -31,20 +31,24 @@ export class BookingComponent implements OnInit {
   totalAmount = 0;
   minDate = '';
 
-  // ✅ Inject BOTH services
   constructor(
-    private service: DestinationService,
+    private destinationService: DestinationService,
     private bookingService: BookingService
   ) {}
 
   ngOnInit(): void {
 
-    this.destinations = this.service.getDestinations();
+    // Load destinations
+    this.destinations = this.destinationService.getDestinations();
 
+    // Set minimum date
     const today = new Date();
     this.minDate = today.toISOString().split('T')[0];
   }
 
+  // =========================
+  // Update price when destination changes
+  // =========================
   updatePrice() {
 
     const selected = this.destinations.find(
@@ -56,6 +60,9 @@ export class BookingComponent implements OnInit {
     this.calculateTotal();
   }
 
+  // =========================
+  // Calculate total amount
+  // =========================
   calculateTotal() {
 
     if (this.selectedPrice > 0 && this.booking.persons > 0) {
@@ -65,100 +72,99 @@ export class BookingComponent implements OnInit {
     }
   }
 
-  // Step 1: Open dialog
+  // =========================
+  // Step 1: Validate & Open Dialog
+  // =========================
   submitForm(form: NgForm) {
 
-    // if (form.invalid) {
-    //   form.control.markAllAsTouched();
-    //   return;
-    // }
-
-    // this.showDialog = true;
     if (form.invalid) {
 
-    // Simulated API response for validation error
-    const response = {
-      status: 422, // 422 Unprocessable Entity
-      success: false,
-      message: "Validation Failed! Please fill all required fields correctly."
-    };
+      form.control.markAllAsTouched();
 
-    console.log("API Response:", response);
-    console.log("Status Code:", response.status);
+      const response = {
+        status: 422,
+        success: false,
+        message: "Validation Failed! Fill all required fields correctly."
+      };
 
-    // Highlight form errors
-    form.control.markAllAsTouched();
+      console.log("Validation Response:", response);
+      this.showToast(`❌ ${response.message} (Status: ${response.status})`);
 
-    // Show toast
-    this.showToast(`❌ ${response.message} `);
-    console.log("Validation Failed! Please fill all required fields correctly.");
+      return;
+    }
 
-    return;
+    // Open confirmation popup
+    this.showDialog = true;
   }
 
-  // ✅ Open confirmation popup if form is valid
-  this.showDialog = true;
-  }
-
-  // ✅ Step 2: Confirm booking (ONLY ONE METHOD NOW)
+  // =========================
+  // Step 2: Confirm Booking (POST)
+  // =========================
   confirmBooking(form: NgForm) {
 
-    const bookingData = {
-      ...this.booking,
-      pricePerPerson: this.selectedPrice,
-      totalAmount: this.totalAmount,
-      bookingDate: new Date()
-    };
-
-    const response = this.bookingService.submitBooking(bookingData);
-    console.log("API Response:", response);
-    console.log("Status Code:", response.status);
-    // ✅ Status 200
-    if (response.status === 200) {
-      console.log("✅ Success - Data Stored in LocalStorage");
-
-      this.showToast(`✅ ${response.message}`);
-
-      // Reset form properly
-      form.resetForm({
-        name: '',
-        email: '',
-        phone: '',
-        destination: '',
-        date: '',
-        persons: 1
-      });
-
-      this.selectedPrice = 0;
-      this.totalAmount = 0;
-    }
-
-    // ❌ Status 404
-    else if (response.status === 404) {
-      console.log("❌ Error - Booking Failed");
-      this.showToast(`❌ ${response.message} (Status: ${response.status})`);
-    }
-
-    this.showDialog = false;
-  }
-
-  cancelBooking() {
-
-  const response = {
-    status: 400,
-    success: false,
-    message: "Booking Cancelled by User"
+  const bookingData = {
+    ...this.booking,
+    pricePerPerson: this.selectedPrice,
+    totalAmount: this.totalAmount,
+    bookingDate: new Date()
   };
 
-  console.log("API Response:", response);
-  console.log("Status Code:", response.status);
-  console.log("⚠ Booking Cancelled");
+  this.bookingService.addBooking(bookingData)
+    .subscribe({
+
+      next: (response: any) => {
+
+        console.log("✅ POST Success Response:", response);
+
+        this.showToast("✅ Booking Added Successfully (Status: 201)");
+
+        // Reset form
+        form.resetForm({
+          name: '',
+          email: '',
+          phone: '',
+          destination: '',
+          date: '',
+          persons: 1
+        });
+
+        this.selectedPrice = 0;
+        this.totalAmount = 0;
+      },
+
+      error: (error) => {
+
+        console.log("❌ POST Error:", error);
+
+        this.showToast("❌ Booking Failed (Status: 400)");
+      }
+
+    });
 
   this.showDialog = false;
-
-  this.showToast(`❌ ${response.message} (Status: ${response.status})`);
 }
 
+  // =========================
+  // Cancel Booking
+  // =========================
+  cancelBooking() {
+
+    const response = {
+      status: 400,
+      success: false,
+      message: "Booking Cancelled by User"
+    };
+
+    console.log("Cancel Response:", response);
+
+    this.showDialog = false;
+
+    this.showToast(`❌ ${response.message} (Status: ${response.status})`);
+  }
+
+  // =========================
+  // Toast Message
+  // =========================
   showToast(message: string) {
 
     this.toastMessage = message;
@@ -167,4 +173,5 @@ export class BookingComponent implements OnInit {
       this.toastMessage = '';
     }, 3000);
   }
+
 }

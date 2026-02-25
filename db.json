@@ -1,0 +1,70 @@
+{
+  "bookings": [
+    {
+      "id": "41dc",
+      "name": "hii",
+      "email": "hiiii@gmail.com",
+      "phone": "9876543298",
+      "destination": "Coorg",
+      "date": "2026-02-27",
+      "persons": 1,
+      "pricePerPerson": 8000,
+      "totalAmount": 8000,
+      "bookingDate": "2026-02-25T05:24:12.987Z"
+    },
+    {
+      "id": "fb64",
+      "name": "Nobi",
+      "email": "nobi@gmail.com",
+      "phone": "9876543211",
+      "destination": "Rishikesh",
+      "date": "2026-02-27",
+      "persons": 6,
+      "pricePerPerson": 9000,
+      "totalAmount": 54000,
+      "bookingDate": "2026-02-25T05:31:33.859Z"
+    },
+    {
+      "id": "bcc3"
+    },
+    {
+      "id": "8714",
+      "name": "Hashmi Patan",
+      "email": "patan@gmail.com",
+      "phone": "9876543678",
+      "destination": "Taj Mahal, Agra",
+      "date": "2026-02-28",
+      "persons": 9,
+      "pricePerPerson": 6000,
+      "totalAmount": 54000,
+      "bookingDate": "2026-02-25T05:39:14.782Z"
+    },
+    {
+      "id": "22ac",
+      "name": "Patan.Hashmi",
+      "email": "ihh0@gmail.com",
+      "phone": "1234567432",
+      "destination": "Manali",
+      "date": "2026-03-05",
+      "persons": 1,
+      "pricePerPerson": 11000,
+      "totalAmount": 11000,
+      "bookingDate": "2026-02-25T05:40:11.423Z"
+    },
+    {
+      "id": "f91a"
+    },
+    {
+      "id": "c5c3",
+      "name": "Test User",
+      "email": "test@gmail.com",
+      "phone": "9876543210",
+      "destination": "Goa",
+      "date": "2026-02-28",
+      "persons": 2,
+      "pricePerPerson": 5000,
+      "totalAmount": 10000,
+      "bookingDate": "2026-02-25T10:00:00.000Z"
+    }
+  ]
+}

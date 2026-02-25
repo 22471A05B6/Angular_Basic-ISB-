@@ -1,37 +1,16 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BookingService {
 
-  submitBooking(data: any) {
+  private apiUrl = 'http://localhost:3000/bookings';
 
-    // ❌ Error condition
-    if (!data || !data.destination || data.totalAmount <= 0) {
-      return {
-        status: 404,
-        success: false,
-        message: 'Booking Failed! Invalid Data.'
-      };
-    }
+  constructor(private http: HttpClient) {}
 
-    // ✅ Success case
-    const existingBookings = JSON.parse(
-      localStorage.getItem('bookings') || '[]'
-    );
-
-    existingBookings.push(data);
-
-    localStorage.setItem(
-      'bookings',
-      JSON.stringify(existingBookings)
-    );
-
-    return {
-      status: 200,
-      success: true,
-      message: 'Booking Successful!'
-    };
+  addBooking(data: any) {
+    return this.http.post(this.apiUrl, data);
   }
 }

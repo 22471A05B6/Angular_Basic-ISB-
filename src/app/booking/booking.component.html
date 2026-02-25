@@ -6,6 +6,7 @@
 
     <form #bookingForm="ngForm" (ngSubmit)="submitForm(bookingForm)">
 
+      <!-- NAME -->
       <div class="form-group">
         <input type="text"
                name="name"
@@ -15,22 +16,25 @@
                minlength="3"
                placeholder="Full Name">
         <small *ngIf="name.invalid && name.touched">
-          Minimum 3 characters
+          Minimum 3 characters required
         </small>
       </div>
 
+      <!-- EMAIL -->
       <div class="form-group">
         <input type="email"
                name="email"
                [(ngModel)]="booking.email"
                #email="ngModel"
                required
+               email
                placeholder="Email">
         <small *ngIf="email.invalid && email.touched">
-          Enter valid email
+          Enter valid email address
         </small>
       </div>
 
+      <!-- PHONE -->
       <div class="form-group">
         <input type="tel"
                name="phone"
@@ -40,13 +44,15 @@
                pattern="^[0-9]{10}$"
                placeholder="Phone Number">
         <small *ngIf="phone.invalid && phone.touched">
-          Enter 10 digit number
+          Enter valid 10 digit number
         </small>
       </div>
 
+      <!-- DESTINATION -->
       <div class="form-group">
         <select name="destination"
                 [(ngModel)]="booking.destination"
+                #destination="ngModel"
                 required
                 (change)="updatePrice()">
           <option value="">Select Destination</option>
@@ -55,27 +61,44 @@
             {{ dest.name }}
           </option>
         </select>
+
+        <small *ngIf="destination.invalid && destination.touched">
+          Please select destination
+        </small>
       </div>
 
+      <!-- DATE -->
       <div class="form-group">
         <input type="date"
                name="date"
                [(ngModel)]="booking.date"
+               #date="ngModel"
                [min]="minDate"
                required>
+        <small *ngIf="date.invalid && date.touched">
+          Select valid date
+        </small>
       </div>
 
+      <!-- PERSONS -->
       <div class="form-group">
         <input type="number"
                name="persons"
                [(ngModel)]="booking.persons"
+               #persons="ngModel"
                min="1"
                required
                (input)="calculateTotal()"
                placeholder="Number of Persons">
+        <small *ngIf="persons.invalid && persons.touched">
+          Minimum 1 person required
+        </small>
       </div>
 
-      <button type="submit" class="btn-primary">
+      <!-- SUBMIT BUTTON -->
+      <button type="submit"
+              class="btn-primary"
+              [disabled]="bookingForm.invalid">
         Book Now
       </button>
 
@@ -89,17 +112,19 @@
     <h3>Summary</h3>
 
     <p><strong>Destination:</strong> {{ booking.destination }}</p>
-    <p><strong>Price:</strong> ₹{{ selectedPrice }}</p>
+    <p><strong>Price per Person:</strong> ₹{{ selectedPrice }}</p>
     <p><strong>Persons:</strong> {{ booking.persons }}</p>
+
     <hr>
+
     <h4>Total: ₹{{ totalAmount }}</h4>
 
   </div>
 
 </div>
 
-<!-- Confirmation Popup -->
-<!-- Alert Confirmation Popup -->
+
+<!-- CONFIRMATION POPUP -->
 <div class="alert-overlay" *ngIf="showDialog">
   <div class="alert-box">
 
@@ -113,18 +138,22 @@
     </div>
 
     <div class="alert-buttons">
-      <button class="confirm-btn" (click)="confirmBooking(bookingForm)">
+      <button class="confirm-btn"
+              (click)="confirmBooking(bookingForm)">
         Confirm
       </button>
-      <button class="cancel-btn" (click)="cancelBooking()">
-  Cancel
-</button>
+
+      <button class="cancel-btn"
+              (click)="cancelBooking()">
+        Cancel
+      </button>
     </div>
 
   </div>
 </div>
 
-<!-- Toast -->
+
+<!-- TOAST MESSAGE -->
 <div class="toast" *ngIf="toastMessage">
   {{ toastMessage }}
 </div>
