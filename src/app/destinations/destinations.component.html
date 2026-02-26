@@ -1,5 +1,6 @@
 <div class="destinations-page">
 
+  <!-- SIDEBAR -->
   <aside class="sidebar">
 
     <h2>🌍 Discover</h2>
@@ -26,33 +27,33 @@
       </div>
     </div>
 
+    <!-- PACKAGE -->
     <div class="filter-section">
-  <h4>Package Type</h4>
+      <h4>Package Type</h4>
 
-  <div class="package-container">
-    <button 
-      class="package-btn"
-      [class.active]="selectedPackage === 'Standard'"
-      (click)="filterByPackage('Standard')">
-      Standard
-    </button>
+      <div class="package-container">
+        <button 
+          class="package-btn"
+          [class.active]="selectedPackage === 'Standard'"
+          (click)="filterByPackage('Standard')">
+          Standard
+        </button>
 
-    <button 
-      class="package-btn"
-      [class.active]="selectedPackage === 'Premium'"
-      (click)="filterByPackage('Premium')">
-      Premium
-    </button>
+        <button 
+          class="package-btn"
+          [class.active]="selectedPackage === 'Premium'"
+          (click)="filterByPackage('Premium')">
+          Premium
+        </button>
 
-    <button 
-      class="package-btn"
-      [class.active]="selectedPackage === 'Luxury'"
-      (click)="filterByPackage('Luxury')">
-      Luxury
-    </button>
-  </div>
-</div>
-
+        <button 
+          class="package-btn"
+          [class.active]="selectedPackage === 'Luxury'"
+          (click)="filterByPackage('Luxury')">
+          Luxury
+        </button>
+      </div>
+    </div>
 
     <!-- POPULARITY -->
     <div class="filter-section">
@@ -83,55 +84,86 @@
 
   </aside>
 
-  <!-- CARDS -->
-  <section class="grid" [class.card-active]="expandedIndex !== null">
+  <!-- CARDS SECTION -->
+  <section class="cards-wrapper">
 
-    <div 
-      class="card"
-      *ngFor="let d of filteredDestinations; let i = index"
-      [class.expanded]="expandedIndex === i"
-      [class.faded]="expandedIndex !== null && expandedIndex !== i"
-      (click)="toggleCard(i)"
-    >
-
-      <div class="image-container">
-        <img [src]="d.image" alt="{{ d.name }}">
-
-        <div 
-          *ngIf="expandedIndex === i"
-          class="back-arrow"
-          (click)="closeCard($event)">
-          ←
-        </div>
-      </div>
-
-      <div class="info">
-        <h3>{{ d.name }}</h3>
-
-        <p>
-          {{ expandedIndex === i 
-              ? d.description + ' This destination offers unforgettable memories.'
-              : d.description }}
-        </p>
-
-        <div class="tags">
-          <span class="type">{{ d.type }}</span>
-          <span class="pop">{{ d.popularity }}</span>
-        </div>
-
-        <div class="price">
-          ₹ {{ d.price | number }}
-        </div>
+    <!-- SEARCH BAR -->
+    <div class="top-search">
+      <input 
+        type="text"
+        placeholder="Search destinations..."
+        [(ngModel)]="searchText"
+        (input)="applyFilters()"
+        class="search-input"
+      />
 
       <button 
-  *ngIf="expandedIndex === i"
-  class="book-btn"
-  (click)="goToDetails(d, $event)">
-  Explore
-</button>
-
-      </div>
+        class="search-btn"
+        (click)="applyFilters()">
+        🔍 Search
+      </button>
     </div>
+
+    <!-- CARDS GRID -->
+    <div class="grid" [class.card-active]="expandedIndex !== null">
+
+      <div 
+        class="card"
+        *ngFor="let d of filteredDestinations; let i = index"
+        [class.expanded]="expandedIndex === i"
+        [class.faded]="expandedIndex !== null && expandedIndex !== i"
+        (click)="toggleCard(i)"
+      >
+
+        <div class="image-container">
+          <img [src]="d.image" alt="{{ d.name }}">
+
+          <div 
+            *ngIf="expandedIndex === i"
+            class="back-arrow"
+            (click)="closeCard($event)">
+            ←
+          </div>
+        </div>
+
+        <div class="info">
+          <h3>{{ d.name }}</h3>
+
+          <p>
+            {{ expandedIndex === i 
+                ? d.description + ' This destination offers unforgettable memories.'
+                : d.description }}
+          </p>
+
+          <div class="tags">
+            <span class="type">{{ d.type }}</span>
+            <span class="pop">{{ d.popularity }}</span>
+          </div>
+
+          <div class="price">
+            ₹ {{ d.price | number }}
+          </div>
+
+          <button 
+            *ngIf="expandedIndex === i"
+            class="book-btn"
+            (click)="goToDetails(d, $event)">
+            Explore
+          </button>
+
+        </div>
+      </div>
+
+    </div>
+    <!-- NO RESULTS MESSAGE -->
+<div 
+  *ngIf="filteredDestinations.length === 0 && searchText"
+  class="no-results">
+
+  ❌ No destinations found for 
+  <strong>"{{ searchText }}"</strong>
+
+</div>
 
   </section>
 

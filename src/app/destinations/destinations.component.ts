@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { DestinationService, Destination } from '../services/destination.service';
 
 @Component({
   selector: 'app-destinations',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './destinations.component.html',
   styleUrls: ['./destinations.component.css']
 })
@@ -13,6 +15,8 @@ export class DestinationsComponent implements OnInit {
 
   destinations: Destination[] = [];
   filteredDestinations: Destination[] = [];
+
+  searchText: string = '';
 
   // Filters
   selectedType: string = 'All';
@@ -30,7 +34,10 @@ export class DestinationsComponent implements OnInit {
 
   expandedIndex: number | null = null;
 
-  constructor(private destinationService: DestinationService) {}
+  constructor(
+    private destinationService: DestinationService,
+    private router: Router   // ✅ Added Router
+  ) {}
 
   ngOnInit(): void {
     this.destinations = this.destinationService.getDestinations();
@@ -62,7 +69,7 @@ export class DestinationsComponent implements OnInit {
   }
 
   // ===============================
-  // APPLY ALL FILTERS TOGETHER
+  // APPLY ALL FILTERS
   // ===============================
   applyFilters() {
     this.filteredDestinations = this.destinations.filter(dest => {
@@ -77,13 +84,19 @@ export class DestinationsComponent implements OnInit {
 
       if (this.selectedPackage === 'Standard') {
         packageMatch = dest.price <= 7000;
-      } else if (this.selectedPackage === 'Premium') {
+      } 
+      else if (this.selectedPackage === 'Premium') {
         packageMatch = dest.price > 7000 && dest.price <= 12000;
-      } else if (this.selectedPackage === 'Luxury') {
+      } 
+      else if (this.selectedPackage === 'Luxury') {
         packageMatch = dest.price > 12000;
       }
 
-      return typeMatch && popularityMatch && packageMatch;
+      const searchMatch =
+        !this.searchText ||
+        dest.name.toLowerCase().includes(this.searchText.toLowerCase());
+
+      return typeMatch && popularityMatch && packageMatch && searchMatch;
     });
   }
 
@@ -94,6 +107,7 @@ export class DestinationsComponent implements OnInit {
     this.selectedType = 'All';
     this.selectedPackage = '';
     this.selectedPopularity = '';
+    this.searchText = '';
     this.filteredDestinations = this.destinations;
   }
 
@@ -110,11 +124,14 @@ export class DestinationsComponent implements OnInit {
   }
 
   // ===============================
-  // DETAILS BUTTON
+  // NAVIGATE TO DETAILS (WITHOUT ID)
   // ===============================
   goToDetails(destination: Destination, event: Event) {
     event.stopPropagation();
-    alert('Opening details for ' + destination.name);
+
+    this.router.navigate(['/destination-details'], {
+      state: { destination: destination }
+    });
   }
 
 }

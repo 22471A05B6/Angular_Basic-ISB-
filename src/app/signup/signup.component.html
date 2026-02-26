@@ -1,0 +1,69 @@
+<div class="auth-container">
+
+  <h1>Create Account</h1>
+  <p class="subtitle">Join our tourism portal</p>
+
+  <form (ngSubmit)="onRegister()" #signupForm="ngForm">
+
+    <!-- Full Name -->
+    <div class="form-group">
+      <label>Full Name</label>
+      <input
+        type="text"
+        name="name"
+        [(ngModel)]="user.name"
+        placeholder="Enter your name"
+        required
+      />
+    </div>
+
+    <!-- Email -->
+    <div class="form-group">
+      <label>Email</label>
+      <input
+        type="email"
+        name="email"
+        [(ngModel)]="user.email"
+        placeholder="Enter your email"
+        required
+      />
+    </div>
+
+    <!-- Password -->
+    <div class="form-group">
+      <label>Password</label>
+      <input
+        type="password"
+        name="password"
+        [(ngModel)]="user.password"
+        placeholder="Create password"
+        required
+      />
+    </div>
+
+    <!-- Confirm Password -->
+    <div class="form-group">
+      <label>Confirm Password</label>
+      <input
+        type="password"
+        name="confirmPassword"
+        [(ngModel)]="user.confirmPassword"
+        placeholder="Confirm password"
+        required
+      />
+    </div>
+
+    <!-- Submit Button -->
+    <button type="submit" [disabled]="signupForm.invalid">
+      Register
+    </button>
+
+    <!-- Switch to Login -->
+    <p class="switch">
+      Already have an account?
+      <a routerLink="/signin">Login here</a>
+    </p>
+
+  </form>
+
+</div>

@@ -8,6 +8,41 @@
   background: #f8f9fb;
 }
 
+.cards-wrapper {
+  flex: 1;
+  padding: 20px;
+}
+
+.top-search {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.search-input {
+  width: 300px;
+  padding: 10px;
+  border-radius: 25px;
+  border: 1px solid #ccc;
+}
+
+.search-btn {
+  padding: 10px 20px;
+  border-radius: 25px;
+  background: #ff5722;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+.no-results {
+  text-align: center;
+  margin-top: 40px;
+  font-size: 18px;
+  color: #888;
+  font-weight: 500;
+}
+
 
 /* ============================= */
 /* SIDEBAR */

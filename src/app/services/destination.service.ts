@@ -105,7 +105,7 @@ export class DestinationService {
       type: 'Heritage',
       popularity: 'High',
       price: 6500,
-      image: 'https://media.istockphoto.com/id/172124032/photo/mysore-palace-at-dusk.jpg'
+      image: 'https://bangalore247.in/wp-content/uploads/2021/03/Mysore-Palace-1280x720.jpg'
     },
     {
       id: 11,
@@ -114,7 +114,7 @@ export class DestinationService {
       type: 'Historical',
       popularity: 'High',
       price: 6000,
-      image: 'https://media.istockphoto.com/id/1215274990/photo/high-wide-angle-view-of-charminar-in-the-night.jpg'
+      image: 'https://indiainfrahub.com/wp-content/uploads/2020/08/Charminar.jpg'
     },
     {
       id: 12,
