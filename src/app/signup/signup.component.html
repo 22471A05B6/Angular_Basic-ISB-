@@ -89,6 +89,14 @@
         </p>
 
       </form>
+      <!-- ALERT MESSAGE -->
+<div class="custom-alert success" *ngIf="alertMessage && alertType === 'success'">
+  {{ alertMessage }}
+</div>
+
+<div class="custom-alert error" *ngIf="alertMessage && alertType === 'error'">
+  {{ alertMessage }}
+</div>
     </div>
   </div>
 

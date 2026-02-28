@@ -7,7 +7,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-signin',
   standalone: true,
-  imports: [FormsModule, RouterModule,CommonModule],
+  imports: [FormsModule, RouterModule, CommonModule],
   templateUrl: './signin.component.html',
   styleUrls: ['./signin.component.css']
 })
@@ -18,12 +18,25 @@ export class SigninComponent {
     password: ''
   };
 
+  alertMessage: string = '';
+  alertType: 'success' | 'error' | '' = '';
+
   constructor(private auth: AuthService, private router: Router) {}
+
+  showAlert(message: string, type: 'success' | 'error') {
+    this.alertMessage = message;
+    this.alertType = type;
+
+    setTimeout(() => {
+      this.alertMessage = '';
+      this.alertType = '';
+    }, 3000); // disappears after 3 seconds
+  }
 
   onLogin(form: NgForm) {
 
     if (form.invalid) {
-      alert("Please enter valid details");
+      this.showAlert("Please enter valid details", "error");
       return;
     }
 
@@ -33,11 +46,15 @@ export class SigninComponent {
     );
 
     if (success) {
-      alert("Login Successful!");
+      this.showAlert("Login Successful! 🎉", "success");
       form.resetForm();
-      this.router.navigate(['/dashboard']);
+
+      setTimeout(() => {
+        this.router.navigate(['/dashboard']);
+      }, 3000);
+
     } else {
-      alert("Invalid Email or Password");
+      this.showAlert("Invalid Email or Password ❌", "error");
     }
   }
 }

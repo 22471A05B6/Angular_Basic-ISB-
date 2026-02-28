@@ -7,7 +7,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-signup',
   standalone: true,
-  imports: [FormsModule, RouterModule,CommonModule],
+  imports: [FormsModule, RouterModule, CommonModule],
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css']
 })
@@ -20,17 +20,30 @@ export class SignupComponent {
     confirmPassword: ''
   };
 
+  alertMessage: string = '';
+  alertType: 'success' | 'error' | '' = '';
+
   constructor(private auth: AuthService, private router: Router) {}
+
+  showAlert(message: string, type: 'success' | 'error') {
+    this.alertMessage = message;
+    this.alertType = type;
+
+    setTimeout(() => {
+      this.alertMessage = '';
+      this.alertType = '';
+    }, 3000);
+  }
 
   onRegister(form: NgForm) {
 
     if (form.invalid) {
-      alert("Please fill all fields correctly");
+      this.showAlert("Please fill all fields correctly", "error");
       return;
     }
 
     if (this.user.password !== this.user.confirmPassword) {
-      alert("Passwords do not match");
+      this.showAlert("Passwords do not match ❌", "error");
       return;
     }
 
@@ -41,11 +54,15 @@ export class SignupComponent {
     });
 
     if (response.success) {
-      alert("Registration Successful!");
+      this.showAlert("Registration Successful! 🎉", "success");
       form.resetForm();
-      this.router.navigate(['/signin']);
+
+      setTimeout(() => {
+        this.router.navigate(['/signin']);
+      }, 1500);
+
     } else {
-      alert(response.message);
+      this.showAlert(response.message || "User already exists ❌", "error");
     }
   }
 }

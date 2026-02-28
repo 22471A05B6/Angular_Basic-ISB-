@@ -117,3 +117,33 @@ input.ng-invalid.ng-touched {
 input.ng-valid.ng-touched {
   border: 1px solid green;
 }
+/* CUSTOM ALERT */
+.custom-alert {
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  font-weight: 600;
+  text-align: center;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.custom-alert.success {
+  background: #d4edda;
+  color: #155724;
+}
+
+.custom-alert.error {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

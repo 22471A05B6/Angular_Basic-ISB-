@@ -10,6 +10,7 @@
   <div class="auth-right">
     <div class="auth-card">
       <h2>Login</h2>
+     
 
       <form #signinForm="ngForm" (ngSubmit)="onLogin(signinForm)">
 
@@ -53,6 +54,14 @@
           Don't have an account?
           <a routerLink="/signup">Register</a>
         </p>
+         <!-- ALERT MESSAGE -->
+<div class="custom-alert success" *ngIf="alertMessage && alertType === 'success'">
+  {{ alertMessage }}
+</div>
+
+<div class="custom-alert error" *ngIf="alertMessage && alertType === 'error'">
+  {{ alertMessage }}
+</div>
 
       </form>
     </div>
