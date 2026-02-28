@@ -1,108 +1,119 @@
-/* Background */
-body {
-  margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
-  background: linear-gradient(135deg, #36b9cc, #4e73df);
+.auth-wrapper {
+  display: flex;
+  height: 100vh;
+  font-family: 'Poppins', sans-serif;
 }
 
-/* Main Container */
-.auth-container {
-  width: 100%;
-  max-width: 400px;
-  margin: 80px auto;
-  padding: 30px;
-  background: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+/* LEFT SIDE */
+.auth-left {
+  flex: 1;
+  background: url('https://i.pinimg.com/736x/1c/c7/e9/1cc7e9dd9fefbfc483e9192df002cd91.jpg') center/cover no-repeat;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.overlay {
+  background: rgba(0,0,0,0.55);
+  color: white;
+  padding: 40px;
   text-align: center;
+  border-radius: 20px;
 }
 
-/* Heading */
-.auth-container h1 {
-  margin-bottom: 5px;
-  color: #333;
+.overlay h1 {
+  font-size: 36px;
+  margin-bottom: 10px;
 }
 
-.subtitle {
+/* RIGHT SIDE */
+.auth-right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #4e73df, #36b9cc);
+}
+
+/* GLASS CARD */
+.auth-card {
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(15px);
+  padding: 40px;
+  border-radius: 20px;
+  width: 380px;
+  color: white;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+}
+
+.auth-card h2 {
+  text-align: center;
   margin-bottom: 25px;
-  font-size: 14px;
-  color: #777;
 }
 
-/* Form Group */
-.form-group {
+.input-group {
   margin-bottom: 18px;
-  text-align: left;
 }
 
-.form-group label {
-  font-size: 14px;
-  font-weight: 600;
-  color: #444;
-  display: block;
-  margin-bottom: 6px;
-}
-
-/* Inputs */
-.form-group input {
+.input-group input {
   width: 100%;
-  padding: 10px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
   outline: none;
-  transition: 0.3s;
   font-size: 14px;
 }
 
-/* Input Focus */
-.form-group input:focus {
-  border-color: #36b9cc;
-  box-shadow: 0 0 5px rgba(54, 185, 204, 0.4);
-}
-
-/* Button */
 button {
   width: 100%;
-  padding: 10px;
-  background: #36b9cc;
+  padding: 12px;
   border: none;
-  border-radius: 6px;
-  color: #fff;
+  border-radius: 25px;
+  background: #ff7e5f;
+  color: white;
   font-size: 15px;
   cursor: pointer;
   transition: 0.3s;
-  margin-top: 10px;
 }
 
 button:hover {
-  background: #2c9faf;
+  background: #ff5722;
+  transform: scale(1.05);
 }
 
-button:disabled {
-  background: #aaa;
-  cursor: not-allowed;
-}
-
-/* Switch Link */
 .switch {
+  text-align: center;
   margin-top: 15px;
-  font-size: 13px;
 }
 
 .switch a {
-  color: #36b9cc;
+  color: #ffe082;
   text-decoration: none;
   font-weight: 600;
 }
 
-.switch a:hover {
-  text-decoration: underline;
+/* Responsive */
+@media (max-width: 900px) {
+  .auth-wrapper {
+    flex-direction: column;
+  }
+
+  .auth-left {
+    height: 40vh;
+  }
+}
+.error {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+  display: block;
 }
 
-/* Responsive */
-@media (max-width: 480px) {
-  .auth-container {
-    margin: 40px 15px;
-    padding: 20px;
-  }
+input.ng-invalid.ng-touched {
+  border: 1px solid red;
+}
+
+input.ng-valid.ng-touched {
+  border: 1px solid green;
 }

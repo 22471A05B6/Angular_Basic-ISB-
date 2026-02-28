@@ -1,69 +1,95 @@
-<div class="auth-container">
+<div class="auth-wrapper">
 
-  <h1>Create Account</h1>
-  <p class="subtitle">Join our tourism portal</p>
-
-  <form (ngSubmit)="onRegister()" #signupForm="ngForm">
-
-    <!-- Full Name -->
-    <div class="form-group">
-      <label>Full Name</label>
-      <input
-        type="text"
-        name="name"
-        [(ngModel)]="user.name"
-        placeholder="Enter your name"
-        required
-      />
+  <div class="auth-left">
+    <div class="overlay">
+      <h1>Explore The World 🌍</h1>
+      <p>Create your travel account and start your journey today.</p>
     </div>
+  </div>
 
-    <!-- Email -->
-    <div class="form-group">
-      <label>Email</label>
-      <input
-        type="email"
-        name="email"
-        [(ngModel)]="user.email"
-        placeholder="Enter your email"
-        required
-      />
+  <div class="auth-right">
+    <div class="auth-card">
+      <h2>Create Account</h2>
+
+      <form #signupForm="ngForm" (ngSubmit)="onRegister(signupForm)">
+
+        <!-- Name -->
+        <div class="input-group">
+          <input type="text"
+                 name="name"
+                 [(ngModel)]="user.name"
+                 #name="ngModel"
+                 placeholder="Full Name"
+                 required
+                 minlength="3"
+                 pattern="^[a-zA-Z ]+$">
+
+          <small class="error" *ngIf="name.invalid && name.touched">
+            <span *ngIf="name.errors?.['required']">Name is required</span>
+            <span *ngIf="name.errors?.['minlength']">Minimum 3 characters</span>
+            <span *ngIf="name.errors?.['pattern']">Only letters allowed</span>
+          </small>
+        </div>
+
+        <!-- Email -->
+        <div class="input-group">
+          <input type="email"
+                 name="email"
+                 [(ngModel)]="user.email"
+                 #email="ngModel"
+                 placeholder="Email Address"
+                 required
+                 email>
+
+          <small class="error" *ngIf="email.invalid && email.touched">
+            <span *ngIf="email.errors?.['required']">Email required</span>
+            <span *ngIf="email.errors?.['email']">Invalid email</span>
+          </small>
+        </div>
+
+        <!-- Password -->
+        <div class="input-group">
+          <input type="password"
+                 name="password"
+                 [(ngModel)]="user.password"
+                 #password="ngModel"
+                 placeholder="Password"
+                 required
+                 minlength="6">
+
+          <small class="error" *ngIf="password.invalid && password.touched">
+            <span *ngIf="password.errors?.['required']">Password required</span>
+            <span *ngIf="password.errors?.['minlength']">Minimum 6 characters</span>
+          </small>
+        </div>
+
+        <!-- Confirm Password -->
+        <div class="input-group">
+          <input type="password"
+                 name="confirmPassword"
+                 [(ngModel)]="user.confirmPassword"
+                 #confirm="ngModel"
+                 placeholder="Confirm Password"
+                 required>
+
+          <small class="error"
+                 *ngIf="confirm.touched && user.password !== user.confirmPassword">
+            Passwords do not match
+          </small>
+        </div>
+
+        <button type="submit"
+                [disabled]="signupForm.invalid || user.password !== user.confirmPassword">
+          Sign Up
+        </button>
+
+        <p class="switch">
+          Already have an account?
+          <a routerLink="/signin">Login</a>
+        </p>
+
+      </form>
     </div>
-
-    <!-- Password -->
-    <div class="form-group">
-      <label>Password</label>
-      <input
-        type="password"
-        name="password"
-        [(ngModel)]="user.password"
-        placeholder="Create password"
-        required
-      />
-    </div>
-
-    <!-- Confirm Password -->
-    <div class="form-group">
-      <label>Confirm Password</label>
-      <input
-        type="password"
-        name="confirmPassword"
-        [(ngModel)]="user.confirmPassword"
-        placeholder="Confirm password"
-        required
-      />
-    </div>
-
-    <!-- Submit Button -->
-    <button type="submit" [disabled]="signupForm.invalid">
-      Register
-    </button>
-
-    <!-- Switch to Login -->
-    <p class="switch">
-      Already have an account?
-      <a routerLink="/signin">Login here</a>
-    </p>
-
-  </form>
+  </div>
 
 </div>

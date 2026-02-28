@@ -1,1 +1,47 @@
-<p>dashboard works!</p>
+<div class="dashboard-container">
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-overlay">
+      <div class="welcome-card">
+        <h2>Welcome , {{ user?.name }} 👋</h2>
+        <p>Let’s plan your next adventure</p>
+        <button class="explore-btn" routerLink="/dst">Explore Destinations</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats Section -->
+  <section class="stats-section">
+    <div class="stat-card">
+      <h3>150+</h3>
+      <p>Destinations</p>
+    </div>
+
+    <div class="stat-card">
+      <h3>500+</h3>
+      <p>Happy Travelers</p>
+    </div>
+
+    <div class="stat-card">
+      <h3>75+</h3>
+      <p>Tour Packages</p>
+    </div>
+  </section>
+
+  <!-- Destination Section -->
+  <section class="destinations">
+    <h2 class="section-title">Popular Destinations</h2>
+
+    <div class="destination-grid">
+      <div class="destination-card" *ngFor="let place of destinations">
+        <img [src]="place.image" />
+        <div class="card-content">
+          <h4>{{ place.name }}</h4>
+          <span>{{ place.category }}</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
