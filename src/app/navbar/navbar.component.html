@@ -8,13 +8,53 @@
     <span></span>
   </div>
 
-  <!-- DROPDOWN MENU -->
+  <!-- MENU -->
   <ul [class.open]="menuOpen">
-    <li><a routerLink="/" routerLinkActive="active" (click)="closeMenu()">Home</a></li>
-    <li><a routerLink="/dst" routerLinkActive="active" (click)="closeMenu()">Destinations</a></li>
-    <li><a routerLink="/About" routerLinkActive="active" (click)="closeMenu()">About</a></li>
-    <li><a routerLink="/booking" routerLinkActive="active" (click)="closeMenu()">Booking</a></li>
-    <li><a routerLink="/signin" routerLinkActive="active" (click)="closeMenu()">Login</a></li>
-    <li><a routerLink="/signup" routerLinkActive="active" (click)="closeMenu()">Register</a></li>
+
+    <li>
+      <a routerLink="/" routerLinkActive="active" (click)="closeMenu()">Home</a>
+    </li>
+
+    <li>
+      <a routerLink="/dst" routerLinkActive="active" (click)="closeMenu()">Destinations</a>
+    </li>
+
+    <li>
+      <a routerLink="/About" routerLinkActive="active" (click)="closeMenu()">About</a>
+    </li>
+
+    <li>
+      <a routerLink="/booking" routerLinkActive="active" (click)="closeMenu()">Booking</a>
+    </li>
+
+    <!-- NOT LOGGED IN -->
+    <ng-container *ngIf="!user">
+      <li>
+        <a routerLink="/signin" routerLinkActive="active" (click)="closeMenu()">Login</a>
+      </li>
+      <li>
+        <a routerLink="/signup" routerLinkActive="active" (click)="closeMenu()">Register</a>
+      </li>
+    </ng-container>
+
+    <!-- LOGGED IN -->
+    <ng-container *ngIf="user">
+      <li class="profile-li">
+        <div class="profile-wrapper">
+
+          <div class="profile-circle" (click)="toggleProfileMenu($event)">
+            {{ user?.name?.charAt(0) | uppercase }}
+          </div>
+
+          <div class="profile-dropdown" *ngIf="profileMenuOpen">
+            <p class="profile-name">{{ user?.name }}</p>
+            <button (click)="goToProfile()">My Profile</button>
+            <button (click)="logout()">Logout</button>
+          </div>
+
+        </div>
+      </li>
+    </ng-container>
+
   </ul>
 </nav>
