@@ -171,7 +171,130 @@
 }.dashboard-container {
   position: relative;
 }
+/* PROFILE SECTION */
+.profile-section {
+  padding: 60px 20px;
+  display: flex;
+  justify-content: center;
+}
 
+.profile-card-modern {
+  width: 100%;
+  max-width: 900px;
+  background: rgba(255,255,255,0.9);
+  backdrop-filter: blur(10px);
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+  transition: 0.3s ease;
+}
+
+/* HEADER */
+.profile-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.profile-avatar {
+  width: 70px;
+  height: 70px;
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  color: #fff;
+  font-size: 26px;
+  font-weight: bold;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-header h3 {
+  margin: 0;
+  font-size: 22px;
+}
+
+.profile-header p {
+  margin: 0;
+  color: #555;
+}
+
+/* BUTTON */
+.edit-btn {
+  padding: 10px 18px;
+  border-radius: 30px;
+  border: none;
+  background: #2563eb;
+  color: #fff;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.edit-btn:hover {
+  background: #1e40af;
+}
+
+/* FORM */
+.edit-form {
+  margin-top: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  animation: fadeSlide 0.4s ease;
+}
+
+.edit-form input {
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+}
+
+.save-btn {
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  background: #16a34a;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.save-btn:hover {
+  background: #15803d;
+}
+
+/* ANIMATION */
+@keyframes fadeSlide {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+
+  .profile-header {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .profile-avatar {
+    margin-bottom: 10px;
+  }
+
+  .edit-btn {
+    width: 100%;
+  }
+}
 /* Profile Circle */
 .profile-top {
   position: absolute;

@@ -10,6 +10,53 @@
       </div>
     </div>
   </section>
+  <!-- Profile Section -->
+<section class="profile-section">
+
+  <div class="profile-card-modern">
+
+    <div class="profile-header">
+      <div class="profile-avatar">
+        {{ user?.name?.charAt(0) | uppercase }}
+      </div>
+      <div>
+        <h3>{{ user?.name }}</h3>
+        <p>{{ user?.email }}</p>
+      </div>
+      <button class="edit-btn" (click)="editMode = !editMode">
+        {{ editMode ? 'Cancel' : 'Edit Profile' }}
+      </button>
+    </div>
+
+    <!-- EDIT FORM -->
+    <form *ngIf="editMode" #editForm="ngForm" (ngSubmit)="updateProfile(editForm)" class="edit-form">
+
+      <input type="text"
+             name="name"
+             [(ngModel)]="editableUser.name"
+             placeholder="Full Name"
+             required>
+
+      <input type="email"
+             name="email"
+             [(ngModel)]="editableUser.email"
+             placeholder="Email"
+             required>
+
+      <input type="password"
+             name="password"
+             [(ngModel)]="editableUser.password"
+             placeholder="New Password">
+
+      <button type="submit" class="save-btn">
+        Save Changes
+      </button>
+
+    </form>
+
+  </div>
+
+</section>
 
   <!-- Stats Section -->
   <section class="stats-section">

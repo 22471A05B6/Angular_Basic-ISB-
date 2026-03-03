@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-dashboard',
@@ -14,6 +14,8 @@ import { FormsModule } from '@angular/forms';
 export class DashboardComponent implements OnInit {
 
   user: any;
+  editMode: boolean = false;
+  editableUser: any = {};
 
   destinations = [
     {
@@ -40,8 +42,21 @@ export class DashboardComponent implements OnInit {
 
   constructor(private auth: AuthService) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.user = this.auth.getCurrentUser();
+    this.editableUser = { ...this.user };
+  }
+
+  updateProfile(form: NgForm) {
+
+    if (form.invalid) return;
+
+    const response = this.auth.updateUser(this.editableUser);
+
+    if (response.success) {
+      this.user = this.auth.getCurrentUser();
+      this.editMode = false;
+    }
   }
 
   logout() {
