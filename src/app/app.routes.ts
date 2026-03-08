@@ -8,6 +8,7 @@ import { DestinationDetailsComponent } from './destination-details/destination-d
 import { SignupComponent } from './signup/signup.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AuthGuard } from './guards/auth.guard';
+import { AnalyticsComponent } from './analytics/analytics.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -16,6 +17,7 @@ export const routes: Routes = [
   { path: 'About', component: AboutComponent },   
   { path: 'dst', component: DestinationsComponent },
   { path: 'booking', component: BookingComponent },
+  { path: 'Analytics', component: AnalyticsComponent },
   { path: 'destination-details', component: DestinationDetailsComponent },
   {
   path: 'dashboard',

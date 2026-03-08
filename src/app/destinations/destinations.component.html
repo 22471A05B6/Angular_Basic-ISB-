@@ -155,15 +155,16 @@
       </div>
 
     </div>
-    <!-- NO RESULTS MESSAGE -->
-<div 
-  *ngIf="filteredDestinations.length === 0 && searchText"
-  class="no-results">
 
-  ❌ No destinations found for 
-  <strong>"{{ searchText }}"</strong>
+    <!-- NO RESULTS -->
+    <div 
+      *ngIf="filteredDestinations.length === 0 && searchText"
+      class="no-results">
 
-</div>
+      ❌ No destinations found for 
+      <strong>"{{ searchText }}"</strong>
+
+    </div>
 
   </section>
 

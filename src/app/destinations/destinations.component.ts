@@ -18,7 +18,6 @@ export class DestinationsComponent implements OnInit {
 
   searchText: string = '';
 
-  // Filters
   selectedType: string = 'All';
   selectedPackage: string = '';
   selectedPopularity: string = '';
@@ -36,7 +35,7 @@ export class DestinationsComponent implements OnInit {
 
   constructor(
     private destinationService: DestinationService,
-    private router: Router   // ✅ Added Router
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -44,33 +43,21 @@ export class DestinationsComponent implements OnInit {
     this.filteredDestinations = this.destinations;
   }
 
-  // ===============================
-  // TYPE FILTER
-  // ===============================
   filterByType(type: string) {
     this.selectedType = type;
     this.applyFilters();
   }
 
-  // ===============================
-  // PACKAGE FILTER
-  // ===============================
   filterByPackage(pkg: string) {
     this.selectedPackage = pkg;
     this.applyFilters();
   }
 
-  // ===============================
-  // POPULARITY FILTER
-  // ===============================
   filterByPopularity(pop: string) {
     this.selectedPopularity = pop;
     this.applyFilters();
   }
 
-  // ===============================
-  // APPLY ALL FILTERS
-  // ===============================
   applyFilters() {
     this.filteredDestinations = this.destinations.filter(dest => {
 
@@ -100,9 +87,6 @@ export class DestinationsComponent implements OnInit {
     });
   }
 
-  // ===============================
-  // CLEAR FILTERS
-  // ===============================
   clearFilters() {
     this.selectedType = 'All';
     this.selectedPackage = '';
@@ -111,9 +95,6 @@ export class DestinationsComponent implements OnInit {
     this.filteredDestinations = this.destinations;
   }
 
-  // ===============================
-  // CARD EXPAND
-  // ===============================
   toggleCard(index: number) {
     this.expandedIndex = this.expandedIndex === index ? null : index;
   }
@@ -123,15 +104,10 @@ export class DestinationsComponent implements OnInit {
     this.expandedIndex = null;
   }
 
-  // ===============================
-  // NAVIGATE TO DETAILS (WITHOUT ID)
-  // ===============================
   goToDetails(destination: Destination, event: Event) {
     event.stopPropagation();
-
     this.router.navigate(['/destination-details'], {
-      state: { destination: destination }
+      state: { destination }
     });
   }
-
 }
