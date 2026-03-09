@@ -24,12 +24,9 @@
   width:420px;
   padding:40px;
   border-radius:18px;
-
   background:rgba(255,255,255,0.15);
   backdrop-filter:blur(12px);
-
   border:1px solid rgba(255,255,255,0.3);
-
   box-shadow:0 20px 45px rgba(0,0,0,0.25);
 }
 
@@ -52,18 +49,13 @@
 
 .form-group input,
 .form-group select{
-
   height:44px;
   padding:10px 14px;
-
   border-radius:8px;
   border:1px solid rgba(255,255,255,0.3);
-
   background:rgba(255,255,255,0.2);
   color:#fff;
-
   font-size:14px;
-
   transition:all 0.3s ease;
 }
 
@@ -72,28 +64,26 @@
 .form-group input::placeholder{
   color:#eee;
 }
-/* Fix dropdown options visibility */
+
+/* Dropdown fix */
 
 .form-group select option{
   color:#000;
   background:#fff;
 }
+
 .form-group select{
   appearance:none;
-  -webkit-appearance:none;
-  -moz-appearance:none;
   cursor:pointer;
 }
-/* Focus effect */
+
+/* Focus */
 
 .form-group input:focus,
 .form-group select:focus{
-
   outline:none;
   border:1px solid #fff;
-
   background:rgba(255,255,255,0.35);
-
   box-shadow:0 0 0 2px rgba(255,255,255,0.2);
 }
 
@@ -108,207 +98,202 @@
 /* BUTTON */
 
 .btn-primary{
-
   width:100%;
   height:46px;
-
   border:none;
   border-radius:8px;
-
   background:linear-gradient(135deg,#ff7a18,#ffb347);
-
   color:white;
   font-size:15px;
   font-weight:500;
-
   cursor:pointer;
-
   transition:all 0.3s ease;
 }
 
 .btn-primary:hover{
-
   transform:translateY(-2px);
-
   box-shadow:0 8px 20px rgba(0,0,0,0.3);
 }
 
 /* SUMMARY CARD */
 
 .summary-card{
-
   width:300px;
   padding:30px;
-
   border-radius:18px;
-
   background:white;
-
   box-shadow:0 15px 35px rgba(0,0,0,0.25);
 }
 
 .summary-card h3{
-
   margin-bottom:15px;
   font-weight:600;
 }
 
 .summary-card p{
-
   margin:8px 0;
   font-size:14px;
 }
 
 .summary-card h4{
-
   margin-top:10px;
   color:#0077ff;
 }
 
-/* POPUP */
+/* ===============================
+   BOOKING CONFIRMATION POPUP
+================================ */
 
 .alert-overlay{
-
   position:fixed;
   inset:0;
-
   background:rgba(0,0,0,0.65);
-
   display:flex;
   justify-content:center;
   align-items:center;
-
   z-index:1000;
 }
 
-/* POPUP BOX */
-
 .alert-box{
-
   width:320px;
-
   background:white;
   border-radius:14px;
-
   overflow:hidden;
-
   box-shadow:0 20px 45px rgba(0,0,0,0.3);
-
   animation:popup 0.35s ease;
 }
 
-/* HEADER */
-
 .alert-header{
-
   padding:14px;
-
   background:#ffc107;
-
   font-weight:600;
   text-align:center;
 }
 
-/* BODY */
-
 .alert-body{
-
   padding:22px;
   text-align:center;
 }
 
-/* BUTTONS */
-
 .alert-buttons{
-
   display:flex;
   justify-content:space-between;
-
   padding:0 20px 20px;
 }
 
 .confirm-btn{
-
   background:#28a745;
   border:none;
-
   color:white;
-
   padding:8px 16px;
   border-radius:6px;
-
   cursor:pointer;
-
-  transition:0.2s;
 }
 
-.cancel-btn{
-
+.cancel-booking-btn{
   background:#dc3545;
   border:none;
-
   color:white;
-
   padding:8px 16px;
   border-radius:6px;
-
   cursor:pointer;
 }
 
-.confirm-btn:hover{
-
-  transform:scale(1.05);
-}
-
-.cancel-btn:hover{
-
+.confirm-btn:hover,
+.cancel-booking-btn:hover{
   transform:scale(1.05);
 }
 
 /* POPUP ANIMATION */
 
 @keyframes popup{
-
   from{
     transform:scale(0.8);
     opacity:0;
   }
-
   to{
     transform:scale(1);
     opacity:1;
   }
 }
 
-/* TOAST */
+/* ===============================
+   LOGIN REQUIRED DIALOG
+================================ */
+
+.dialog-overlay{
+  position: fixed;
+  inset:0;
+  background: rgba(0,0,0,0.55);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:1100;
+}
+
+.dialog-box{
+  background:white;
+  padding:30px;
+  border-radius:12px;
+  text-align:center;
+  width:320px;
+  box-shadow:0 15px 35px rgba(0,0,0,0.3);
+}
+
+.dialog-box h2{
+  margin-bottom:10px;
+}
+
+.dialog-buttons{
+  margin-top:20px;
+  display:flex;
+  justify-content:space-between;
+}
+
+.login-btn{
+  background:#007bff;
+  color:white;
+  border:none;
+  padding:8px 16px;
+  border-radius:6px;
+  cursor:pointer;
+}
+
+.cancel-login-btn{
+  background:#6c757d;
+  color:white;
+  border:none;
+  padding:8px 16px;
+  border-radius:6px;
+  cursor:pointer;
+}
+
+.login-btn:hover,
+.cancel-login-btn:hover{
+  opacity:0.9;
+}
+
+/* ===============================
+   TOAST
+================================ */
 
 .toast{
-
   position:fixed;
-
   bottom:30px;
   right:30px;
-
   background:linear-gradient(135deg,#00c851,#00ff88);
-
   color:white;
-
   padding:14px 20px;
-
   border-radius:8px;
-
   box-shadow:0 10px 25px rgba(0,0,0,0.3);
-
   animation:toast 0.5s ease;
 }
 
 @keyframes toast{
-
   from{
     transform:translateX(100px);
     opacity:0;
   }
-
   to{
     transform:translateX(0);
     opacity:1;

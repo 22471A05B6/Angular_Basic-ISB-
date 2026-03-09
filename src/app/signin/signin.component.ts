@@ -30,7 +30,7 @@ export class SigninComponent {
     setTimeout(() => {
       this.alertMessage = '';
       this.alertType = '';
-    }, 3000); // disappears after 3 seconds
+    }, 3000);
   }
 
   onLogin(form: NgForm) {
@@ -46,15 +46,22 @@ export class SigninComponent {
     );
 
     if (success) {
+
+      // ✅ Save login status
+      localStorage.setItem("isLoggedIn", "true");
+
       this.showAlert("Login Successful! 🎉", "success");
+
       form.resetForm();
 
       setTimeout(() => {
-        this.router.navigate(['/dashboard']);
-      }, 3000);
+        this.router.navigate(['/booking']);
+      }, 1500);
 
     } else {
+
       this.showAlert("Invalid Email or Password ❌", "error");
+
     }
   }
 }

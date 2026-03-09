@@ -8,6 +8,10 @@ export class AuthService {
   // ================= REGISTER =================
   register(user: any) {
 
+    if(!user.name || !user.email || !user.password){
+      return { success: false, message: 'All fields required' };
+    }
+
     const users = JSON.parse(localStorage.getItem('users') || '[]');
 
     const existingUser = users.find(
@@ -23,6 +27,7 @@ export class AuthService {
 
     return { success: true };
   }
+
 
   // ================= LOGIN =================
   login(email: string, password: string): boolean {
@@ -41,26 +46,33 @@ export class AuthService {
     return false;
   }
 
+
   // ================= LOGOUT =================
   logout() {
     localStorage.removeItem('loggedInUser');
   }
+
 
   // ================= CHECK LOGIN =================
   isLoggedIn(): boolean {
     return !!localStorage.getItem('loggedInUser');
   }
 
+
   // ================= GET CURRENT USER =================
   getCurrentUser() {
-    return JSON.parse(localStorage.getItem('loggedInUser') || 'null');
+
+    const user = localStorage.getItem('loggedInUser');
+    return user ? JSON.parse(user) : null;
+
   }
 
-  // ================= UPDATE USER (NEW ADDED) =================
+
+  // ================= UPDATE USER =================
   updateUser(updatedUser: any) {
 
     const users = JSON.parse(localStorage.getItem('users') || '[]');
-    const currentUser = JSON.parse(localStorage.getItem('loggedInUser') || 'null');
+    const currentUser = this.getCurrentUser();
 
     if (!currentUser) {
       return { success: false, message: 'User not logged in' };
@@ -74,7 +86,6 @@ export class AuthService {
       return { success: false, message: 'User not found' };
     }
 
-    // 🔥 Prevent email duplication while editing
     const emailExists = users.find(
       (u: any) => u.email === updatedUser.email && u.email !== currentUser.email
     );
@@ -83,12 +94,10 @@ export class AuthService {
       return { success: false, message: 'Email already exists' };
     }
 
-    // 🔥 If password field is empty → keep old password
     if (!updatedUser.password) {
       updatedUser.password = users[index].password;
     }
 
-    // Update user
     users[index] = { ...users[index], ...updatedUser };
 
     localStorage.setItem('users', JSON.stringify(users));
@@ -96,4 +105,5 @@ export class AuthService {
 
     return { success: true };
   }
+
 }

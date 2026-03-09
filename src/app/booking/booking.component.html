@@ -122,7 +122,17 @@
   </div>
 
 </div>
+<div class="dialog-overlay" *ngIf="showLoginDialog">
+  <div class="dialog-box">
+    <h2>Login Required</h2>
+    <p>Please sign in to book a destination.</p>
 
+    <div class="dialog-buttons">
+  <button class="login-btn" (click)="goToLogin()">Sign In</button>
+  <button class="cancel-login-btn" (click)="closeLoginDialog()">Cancel</button>
+</div>
+  </div>
+</div>
 
 <!-- CONFIRMATION POPUP -->
 <div class="alert-overlay" *ngIf="showDialog">

@@ -16,6 +16,11 @@ export const routes: Routes = [
   { path: 'signup', component: SignupComponent },
   { path: 'About', component: AboutComponent },   
   { path: 'dst', component: DestinationsComponent },
+  // {
+  //   path: 'booking',
+  //   component: BookingComponent,
+  //   canActivate: [AuthGuard]
+  // },
   { path: 'booking', component: BookingComponent },
   { path: 'Analytics', component: AnalyticsComponent },
   { path: 'destination-details', component: DestinationDetailsComponent },
