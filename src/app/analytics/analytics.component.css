@@ -79,6 +79,16 @@ canvas{
   width:100% !important;
   max-height:340px;
 }
+/* Revenue charts highlight */
+
+.chart-card:hover{
+  transform:translateY(-5px);
+  transition:0.3s;
+}
+
+.chart-card{
+  transition:0.3s;
+}
 
 /* RESPONSIVE */
 

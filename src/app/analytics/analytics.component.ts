@@ -14,6 +14,10 @@ export class AnalyticsComponent implements AfterViewInit {
   @ViewChild('lineChart') lineChart!: ElementRef;
   @ViewChild('doughnutChart') doughnutChart!: ElementRef;
 
+  /* NEW CHARTS */
+  @ViewChild('revenueDestinationChart') revenueDestinationChart!: ElementRef;
+  @ViewChild('monthlyRevenueChart') monthlyRevenueChart!: ElementRef;
+
   bookings: any[] = [];
 
   totalBookings = 0;
@@ -26,6 +30,10 @@ export class AnalyticsComponent implements AfterViewInit {
   pieChartObj: any;
   lineChartObj: any;
   doughnutChartObj: any;
+
+  /* NEW CHART OBJECTS */
+  revenueDestinationChartObj: any;
+  monthlyRevenueChartObj: any;
 
   constructor(private bookingService: BookingService) {}
 
@@ -47,29 +55,35 @@ export class AnalyticsComponent implements AfterViewInit {
 
     const bookingMap = new Map<string, number>();
     const revenueMap = new Map<string, number>();
+    const monthlyRevenueMap = new Map<string, number>();
 
     this.totalRevenue = 0;
 
     this.bookings.forEach(b => {
 
-      /* FIX: Prevent undefined destination */
-
       const destination = b.destination || "Unknown";
-
       const revenue = Number(b.totalAmount) || 0;
 
-      /* COUNT BOOKINGS */
-
+      /* BOOKING COUNT */
       bookingMap.set(
         destination,
         (bookingMap.get(destination) || 0) + 1
       );
 
-      /* CALCULATE REVENUE */
-
+      /* DESTINATION REVENUE */
       revenueMap.set(
         destination,
         (revenueMap.get(destination) || 0) + revenue
+      );
+
+      /* MONTHLY REVENUE */
+
+      const date = new Date(b.date || new Date());
+      const month = date.toLocaleString('default', { month: 'short' });
+
+      monthlyRevenueMap.set(
+        month,
+        (monthlyRevenueMap.get(month) || 0) + revenue
       );
 
       this.totalRevenue += revenue;
@@ -78,8 +92,6 @@ export class AnalyticsComponent implements AfterViewInit {
 
     let labels = Array.from(bookingMap.keys());
     const values = Array.from(bookingMap.values());
-
-    /* FIX: Shorten long destination names */
 
     labels = labels.map(name =>
       name.length > 12 ? name.substring(0, 12) + '...' : name
@@ -93,11 +105,16 @@ export class AnalyticsComponent implements AfterViewInit {
     this.mostBooked = labels[maxIndex];
     this.leastBooked = labels[minIndex];
 
-    this.createCharts(labels, values, revenueMap);
+    this.createCharts(labels, values, revenueMap, monthlyRevenueMap);
 
   }
 
-  createCharts(labels: string[], values: number[], revenueMap: Map<string, number>) {
+  createCharts(
+    labels: string[],
+    values: number[],
+    revenueMap: Map<string, number>,
+    monthlyRevenueMap: Map<string, number>
+  ) {
 
     const colors = [
       '#4facfe',
@@ -116,6 +133,8 @@ export class AnalyticsComponent implements AfterViewInit {
     this.pieChartObj?.destroy();
     this.lineChartObj?.destroy();
     this.doughnutChartObj?.destroy();
+    this.revenueDestinationChartObj?.destroy();
+    this.monthlyRevenueChartObj?.destroy();
 
     /* BAR CHART */
 
@@ -130,27 +149,7 @@ export class AnalyticsComponent implements AfterViewInit {
         }]
       },
       options: {
-        responsive: true,
-        animation: {
-          duration: 1500
-        },
-        plugins: {
-          legend: {
-            display: false
-          }
-        },
-        scales: {
-          x: {
-            ticks: {
-              autoSkip: false,
-              maxRotation: 45,
-              minRotation: 45
-            }
-          },
-          y: {
-            beginAtZero: true
-          }
-        }
+        responsive: true
       }
     });
 
@@ -161,72 +160,85 @@ export class AnalyticsComponent implements AfterViewInit {
       data: {
         labels: ['Confirmed', 'Pending', 'Cancelled'],
         datasets: [{
-          data: [70, 20, 10],
-          backgroundColor: ['#4CAF50', '#FFC107', '#F44336']
+          data: [70,20,10],
+          backgroundColor: ['#4CAF50','#FFC107','#F44336']
         }]
       },
-      options: {
-        responsive: true,
-        animation: {
-          animateRotate: true,
-          duration: 1800
-        }
-      }
+      options: { responsive:true }
     });
 
-    /* LINE CHART (REVENUE) */
+    /* REVENUE LINE CHART */
 
-    const revenueLabels = Array.from(revenueMap.keys()).map(name =>
-      name.length > 12 ? name.substring(0, 12) + '...' : name
-    );
-
+    const revenueLabels = Array.from(revenueMap.keys());
     const revenueValues = Array.from(revenueMap.values());
 
-    this.lineChartObj = new Chart(this.lineChart.nativeElement, {
-      type: 'line',
-      data: {
-        labels: revenueLabels,
-        datasets: [{
-          label: 'Revenue Generated',
-          data: revenueValues,
-          borderColor: '#4facfe',
-          backgroundColor: 'rgba(79,172,254,0.2)',
-          fill: true,
-          tension: 0.4
+    this.lineChartObj = new Chart(this.lineChart.nativeElement,{
+      type:'line',
+      data:{
+        labels:revenueLabels,
+        datasets:[{
+          label:'Revenue Generated',
+          data:revenueValues,
+          borderColor:'#4facfe',
+          backgroundColor:'rgba(79,172,254,0.2)',
+          fill:true,
+          tension:0.4
         }]
       },
-      options: {
-        responsive: true,
-        animation: {
-          duration: 2000
-        },
-        scales: {
-          y: {
-            beginAtZero: true
-          }
-        }
+      options:{ responsive:true }
+    });
+
+    /* DOUGHNUT */
+
+    this.doughnutChartObj = new Chart(this.doughnutChart.nativeElement,{
+      type:'doughnut',
+      data:{
+        labels:labels,
+        datasets:[{
+          data:values,
+          backgroundColor:colors
+        }]
+      },
+      options:{ responsive:true }
+    });
+
+    /* NEW: REVENUE PER DESTINATION */
+
+    this.revenueDestinationChartObj = new Chart(
+      this.revenueDestinationChart.nativeElement,{
+      type:'bar',
+      data:{
+        labels:revenueLabels,
+        datasets:[{
+          label:'Revenue per Destination',
+          data:revenueValues,
+          backgroundColor:'#43e97b'
+        }]
+      },
+      options:{
+        responsive:true
       }
     });
 
-    /* DOUGHNUT CHART */
+    /* NEW: MONTHLY REVENUE */
 
-    this.doughnutChartObj = new Chart(this.doughnutChart.nativeElement, {
-      type: 'doughnut',
-      data: {
-        labels: labels,
-        datasets: [{
-          data: values,
-          backgroundColor: colors
+    const monthLabels = Array.from(monthlyRevenueMap.keys());
+    const monthValues = Array.from(monthlyRevenueMap.values());
+
+    this.monthlyRevenueChartObj = new Chart(
+      this.monthlyRevenueChart.nativeElement,{
+      type:'line',
+      data:{
+        labels:monthLabels,
+        datasets:[{
+          label:'Monthly Revenue',
+          data:monthValues,
+          borderColor:'#ff9800',
+          backgroundColor:'rgba(255,152,0,0.2)',
+          fill:true
         }]
       },
-      options: {
-        responsive: true,
-        cutout: '65%',
-        animation: {
-          animateScale: true,
-          duration: 1800
-        }
-      }
+      options:{ responsive:true }
     });
 
   }

@@ -124,47 +124,50 @@ export class BookingComponent implements OnInit {
   // =========================
   confirmBooking(form: NgForm) {
 
-    const bookingData = {
-      ...this.booking,
-      pricePerPerson: this.selectedPrice,
-      totalAmount: this.totalAmount,
-      bookingDate: new Date()
-    };
+  const user = this.authService.getCurrentUser();
 
-    this.bookingService.addBooking(bookingData)
-      .subscribe({
+  const bookingData = {
+    ...this.booking,
+    userEmail: user?.email,
+    pricePerPerson: this.selectedPrice,
+    totalAmount: this.totalAmount,
+    bookingDate: new Date(),
+    status: 'confirmed'
+  };
 
-        next: (response: any) => {
+  this.bookingService.addBooking(bookingData)
+    .subscribe({
 
-          console.log("✅ POST Success Response:", response);
+      next: (response: any) => {
 
-          this.showToast("✅ Booking Added Successfully (Status: 201)");
+        console.log("✅ POST Success Response:", response);
 
-          form.resetForm({
-            name: this.booking.name,
-            email: this.booking.email,
-            phone: '',
-            destination: '',
-            date: '',
-            persons: 1
-          });
+        this.showToast("✅ Booking Added Successfully (Status: 201)");
 
-          this.selectedPrice = 0;
-          this.totalAmount = 0;
-        },
+        form.resetForm({
+          name: this.booking.name,
+          email: this.booking.email,
+          phone: '',
+          destination: '',
+          date: '',
+          persons: 1
+        });
 
-        error: (error) => {
+        this.selectedPrice = 0;
+        this.totalAmount = 0;
+      },
 
-          console.log("❌ POST Error:", error);
+      error: (error) => {
 
-          this.showToast("❌ Booking Failed (Status: 400)");
-        }
+        console.log("❌ POST Error:", error);
 
-      });
+        this.showToast("❌ Booking Failed (Status: 400)");
+      }
 
-    this.showDialog = false;
-  }
+    });
 
+  this.showDialog = false;
+}
   // =========================
   // Cancel Booking
   // =========================

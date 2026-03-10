@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
+import { BookingService } from '../services/booking.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -20,6 +21,8 @@ export class DashboardComponent implements OnInit {
 
   today = new Date();
   calendarDays: number[] = [];
+
+  bookings: any[] = [];
 
   stats = {
     destinations: 150,
@@ -50,28 +53,48 @@ export class DashboardComponent implements OnInit {
     }
   ];
 
-  constructor(private auth: AuthService) {}
+  constructor(
+    private auth: AuthService,
+    private bookingService: BookingService
+  ) {}
 
   ngOnInit(): void {
+
+    // Logged user
     this.user = this.auth.getCurrentUser();
     this.editableUser = { ...this.user };
+
+    // Generate calendar
     this.generateCalendar();
+
+    // Load bookings from API
+    this.bookingService.getBookings().subscribe((data: any) => {
+
+      // Show only logged user bookings
+      this.bookings = data.filter(
+        (b: any) => b.userEmail === this.user?.email
+      );
+
+    });
+
   }
 
-  /* ✅ SIMPLE DARK MODE TOGGLE */
   toggleDarkMode() {
     this.darkMode = !this.darkMode;
   }
 
   generateCalendar() {
+
     const year = this.today.getFullYear();
     const month = this.today.getMonth();
+
     const lastDate = new Date(year, month + 1, 0).getDate();
 
     this.calendarDays = Array.from({ length: lastDate }, (_, i) => i + 1);
   }
 
   updateProfile(form: NgForm) {
+
     if (form.invalid) return;
 
     const response = this.auth.updateUser(this.editableUser);
@@ -81,4 +104,5 @@ export class DashboardComponent implements OnInit {
       this.editMode = false;
     }
   }
+
 }

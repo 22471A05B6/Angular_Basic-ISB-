@@ -53,37 +53,38 @@
   </div>
 
   <!-- BOOKING ACTIVITIES -->
-  <div class="card booking-card">
-    <h2 class="section-title">Recent Booking Activities</h2>
+  <!-- BOOKINGS -->
+    <section class="booking-section">
 
-    <div class="booking-item">
-      <div>
-        <h4>Goa Beach Trip</h4>
-        <p>Booked on: 12 March 2026</p>
-      </div>
-      <span class="status confirmed">Confirmed</span>
-    </div>
+      <h2 class="section-title">Recent Booking Activities</h2>
 
-    <div class="booking-item">
-      <div>
-        <h4>Manali Adventure</h4>
-        <p>Booked on: 25 March 2026</p>
+      <div *ngIf="bookings.length === 0" class="no-booking">
+        No bookings yet
       </div>
-      <span class="status pending">Pending</span>
-    </div>
 
-    <div class="booking-item">
-      <div>
-        <h4>Rishikesh Retreat</h4>
-        <p>Booked on: 2 April 2026</p>
+      <div class="booking-item" *ngFor="let booking of bookings">
+
+        <div>
+          <h4>{{ booking.destination }}</h4>
+          <p>Booked on: {{ booking.bookingDate | date:'dd MMM yyyy' }}</p>
+        </div>
+
+        <span class="status"
+          [ngClass]="{
+            'confirmed': booking.status === 'confirmed',
+            'pending': booking.status === 'pending',
+            'cancelled': booking.status === 'cancelled'
+          }">
+
+          {{ booking.status }}
+
+        </span>
+
       </div>
-      <span class="status cancelled">Cancelled</span>
-    </div>
+
+    </section>
 
   </div>
-
-</div>
-
     <!-- RIGHT SECTION -->
     <div class="right-section">
 

@@ -215,6 +215,34 @@
       "pricePerPerson": 8500,
       "totalAmount": 8500,
       "bookingDate": "2026-03-09T10:44:53.949Z"
+    },
+    {
+      "id": "e9a8",
+      "name": "hashmi",
+      "email": "hash@gmail.com",
+      "phone": "8764344678",
+      "destination": "Varanasi",
+      "date": "2026-03-10",
+      "persons": 2,
+      "userEmail": "hash@gmail.com",
+      "pricePerPerson": 7000,
+      "totalAmount": 14000,
+      "bookingDate": "2026-03-09T11:54:05.655Z",
+      "status": "confirmed"
+    },
+    {
+      "id": "d518",
+      "name": "hashmi",
+      "email": "hash@gmail.com",
+      "phone": "8776543233",
+      "destination": "Kodaikanal",
+      "date": "2026-03-11",
+      "persons": 2,
+      "userEmail": "hash@gmail.com",
+      "pricePerPerson": 7500,
+      "totalAmount": 15000,
+      "bookingDate": "2026-03-09T13:31:39.226Z",
+      "status": "confirmed"
     }
   ]
 }

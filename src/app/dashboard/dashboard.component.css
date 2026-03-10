@@ -278,6 +278,7 @@ body {
   border: 1px solid #666;
 }
 
+
 /* RESPONSIVE */
 @media (max-width: 992px) {
   .dashboard-content {
@@ -287,4 +288,34 @@ body {
   .stats-section {
     flex-direction: column;
   }
+}
+/* BOOKINGS */
+.booking-item{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:12px 0;
+  border-bottom:1px solid #eee;
+}
+
+.booking-item:last-child{
+  border-bottom:none;
+}
+
+.booking-item h4{
+  margin:0;
+}
+
+.booking-item p{
+  margin:2px 0 0;
+  font-size:13px;
+  color:gray;
+}
+
+.dashboard-container.dark-mode .booking-item{
+  border-bottom:1px solid #444;
+}
+
+.dashboard-container.dark-mode .booking-item p{
+  color:#bbb;
 }
