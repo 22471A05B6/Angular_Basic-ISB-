@@ -1,74 +1,73 @@
 <div class="analytics-container">
 
-  <h1>📊 Travel Analytics Dashboard</h1>
+<h1>📊 Travel Analytics Dashboard</h1>
 
-  <!-- SUMMARY CARDS -->
-  <div class="stats-cards">
+<div class="stats-cards">
 
-    <div class="card">
-      <h3>Total Bookings</h3>
-      <p>{{ totalBookings }}</p>
-    </div>
+<div class="card">
+<h3>Total Bookings</h3>
+<p>{{ totalBookings }}</p>
+</div>
 
-    <div class="card revenue">
-      <h3>Total Revenue</h3>
-      <p>₹ {{ totalRevenue }}</p>
-    </div>
+<div class="card popular">
+<h3>Most Booked</h3>
+<p>{{ mostBooked }}</p>
+</div>
 
-    <div class="card popular">
-      <h3>Most Booked</h3>
-      <p>{{ mostBooked }}</p>
-    </div>
+<div class="card least">
+<h3>Least Booked</h3>
+<p>{{ leastBooked }}</p>
+</div>
 
-    <div class="card least">
-      <h3>Least Booked</h3>
-      <p>{{ leastBooked }}</p>
-    </div>
+<div class="card revenue" *ngIf="auth.isAdmin()">
+<h3>Total Revenue</h3>
+<p>₹ {{ totalRevenue }}</p>
+</div>
 
-  </div>
+</div>
 
-  <!-- ROW 1 -->
-  <div class="charts">
-
-    <div class="chart-card">
-      <h3>Most Booked Locations</h3>
-      <canvas #barChart></canvas>
-    </div>
-
-    <div class="chart-card">
-      <h3>Booking Status</h3>
-      <canvas #pieChart></canvas>
-    </div>
-
-  </div>
-
-  <!-- ROW 2 -->
-  <div class="charts">
-
-    <div class="chart-card">
-      <h3>Revenue Generated</h3>
-      <canvas #lineChart></canvas>
-    </div>
-
-    <div class="chart-card">
-      <h3>Destination Popularity</h3>
-      <canvas #doughnutChart></canvas>
-    </div>
-
-  </div>
-  <!-- ROW 3 : REVENUE ANALYTICS -->
 
 <div class="charts">
 
-  <div class="chart-card">
-    <h3>Revenue Per Destination</h3>
-    <canvas #revenueDestinationChart></canvas>
-  </div>
+<div class="chart-card">
+<h3>Most Booked Locations</h3>
+<canvas #barChart></canvas>
+</div>
 
-  <div class="chart-card">
-    <h3>Monthly Revenue Summary</h3>
-    <canvas #monthlyRevenueChart></canvas>
-  </div>
+<div class="chart-card">
+<h3>Booking Status</h3>
+<canvas #pieChart></canvas>
+</div>
+
+</div>
+
+
+<div class="charts">
+
+<div class="chart-card">
+<h3>Destination Popularity</h3>
+<canvas #doughnutChart></canvas>
+</div>
+
+<div class="chart-card" *ngIf="auth.isAdmin()">
+<h3>Revenue Generated</h3>
+<canvas #lineChart></canvas>
+</div>
+
+</div>
+
+
+<div class="charts" *ngIf="auth.isAdmin()">
+
+<div class="chart-card">
+<h3>Revenue Per Destination</h3>
+<canvas #revenueDestinationChart></canvas>
+</div>
+
+<div class="chart-card">
+<h3>Monthly Revenue Summary</h3>
+<canvas #monthlyRevenueChart></canvas>
+</div>
 
 </div>
 

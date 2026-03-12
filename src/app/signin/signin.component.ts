@@ -47,15 +47,12 @@ export class SigninComponent {
 
     if (success) {
 
-      // ✅ Save login status
-      localStorage.setItem("isLoggedIn", "true");
-
-      this.showAlert("Login Successful! 🎉", "success");
+      this.showAlert("Login Successful 🎉", "success");
 
       form.resetForm();
 
       setTimeout(() => {
-        this.router.navigate(['/booking']);
+        this.router.navigate(['/analytics']);
       }, 1500);
 
     } else {

@@ -5,6 +5,25 @@ import { Injectable } from '@angular/core';
 })
 export class AuthService {
 
+  constructor(){
+
+    const users = JSON.parse(localStorage.getItem('users') || '[]');
+
+    const adminExists = users.find((u:any)=>u.email==="admin@gmail.com");
+
+    if(!adminExists){
+
+      users.push({
+        name:"Admin",
+        email:"admin@gmail.com",
+        password:"admin123",
+        role:"admin"
+      });
+
+      localStorage.setItem("users",JSON.stringify(users));
+    }
+  }
+
   // ================= REGISTER =================
   register(user: any) {
 
@@ -21,6 +40,9 @@ export class AuthService {
     if (existingUser) {
       return { success: false, message: 'Email already exists' };
     }
+
+    // default role
+    user.role = "user";
 
     users.push(user);
     localStorage.setItem('users', JSON.stringify(users));
@@ -39,7 +61,10 @@ export class AuthService {
     );
 
     if (user) {
+
       localStorage.setItem('loggedInUser', JSON.stringify(user));
+      localStorage.setItem("isLoggedIn","true");
+
       return true;
     }
 
@@ -50,6 +75,7 @@ export class AuthService {
   // ================= LOGOUT =================
   logout() {
     localStorage.removeItem('loggedInUser');
+    localStorage.removeItem('isLoggedIn');
   }
 
 
@@ -64,6 +90,16 @@ export class AuthService {
 
     const user = localStorage.getItem('loggedInUser');
     return user ? JSON.parse(user) : null;
+
+  }
+
+
+  // ================= CHECK ADMIN =================
+  isAdmin(): boolean {
+
+    const user = this.getCurrentUser();
+
+    return user && user.role === "admin";
 
   }
 
