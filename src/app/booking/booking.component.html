@@ -51,16 +51,21 @@
       <!-- DESTINATION -->
       <div class="form-group">
         <select name="destination"
-                [(ngModel)]="booking.destination"
-                #destination="ngModel"
-                required
-                (change)="updatePrice()">
-          <option value="">Select Destination</option>
-          <option *ngFor="let dest of destinations"
-                  [value]="dest.name">
-            {{ dest.name }}
-          </option>
-        </select>
+        [(ngModel)]="booking.destination"
+        #destination="ngModel"
+        required
+        (change)="updatePrice()">
+
+<option value="">Select Destination</option>
+
+<option *ngFor="let dest of destinations"
+        [ngValue]="dest.name">
+
+  {{ dest.name }}
+
+</option>
+
+</select>
 
         <small *ngIf="destination.invalid && destination.touched">
           Please select destination

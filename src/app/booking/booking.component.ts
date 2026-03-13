@@ -19,7 +19,7 @@ export class BookingComponent implements OnInit {
   destinations: Destination[] = [];
 
   showDialog = false;
-  showLoginDialog = false;   // ⭐ Added login dialog variable
+  showLoginDialog = false;
   toastMessage = '';
 
   booking = {
@@ -44,20 +44,21 @@ export class BookingComponent implements OnInit {
 
   ngOnInit(): void {
 
-    // 🔐 Check login
+    // ⭐ LOAD DESTINATIONS FIRST
+    this.destinations = this.destinationService.getDestinations();
+
+    // ⭐ PREVENT PAST DATES
+    const today = new Date();
+    today.setHours(0,0,0,0);
+    this.minDate = today.toISOString().split('T')[0];
+
+    // ⭐ LOGIN CHECK
     if (!this.authService.isLoggedIn()) {
-      this.showLoginDialog = true;   // ⭐ Show dialog
+      this.showLoginDialog = true;
       return;
     }
 
-    // Load destinations
-    this.destinations = this.destinationService.getDestinations();
-
-    // Minimum date
-    const today = new Date();
-    this.minDate = today.toISOString().split('T')[0];
-
-    // Auto fill logged user
+    // ⭐ AUTO FILL USER
     const user = this.authService.getCurrentUser();
 
     if (user) {
@@ -67,9 +68,6 @@ export class BookingComponent implements OnInit {
 
   }
 
-  // =========================
-  // Update price
-  // =========================
   updatePrice() {
 
     const selected = this.destinations.find(
@@ -81,9 +79,6 @@ export class BookingComponent implements OnInit {
     this.calculateTotal();
   }
 
-  // =========================
-  // Calculate total
-  // =========================
   calculateTotal() {
 
     if (this.selectedPrice > 0 && this.booking.persons > 0) {
@@ -94,55 +89,35 @@ export class BookingComponent implements OnInit {
 
   }
 
-  // =========================
-  // Submit Form
-  // =========================
   submitForm(form: NgForm) {
 
     if (form.invalid) {
-
       form.control.markAllAsTouched();
-
-      const response = {
-        status: 422,
-        success: false,
-        message: "Validation Failed! Fill all required fields correctly."
-      };
-
-      console.log("Validation Response:", response);
-
-      this.showToast(`❌ ${response.message} (Status: ${response.status})`);
-
+      this.showToast("❌ Fill all fields correctly");
       return;
     }
 
     this.showDialog = true;
   }
 
-  // =========================
-  // Confirm Booking
-  // =========================
   confirmBooking(form: NgForm) {
 
-  const user = this.authService.getCurrentUser();
+    const user = this.authService.getCurrentUser();
 
-  const bookingData = {
-    ...this.booking,
-    userEmail: user?.email,
-    pricePerPerson: this.selectedPrice,
-    totalAmount: this.totalAmount,
-    bookingDate: new Date(),
-    status: 'confirmed'
-  };
+    const bookingData = {
+      ...this.booking,
+      userEmail: user?.email,
+      pricePerPerson: this.selectedPrice,
+      totalAmount: this.totalAmount,
+      bookingDate: new Date(),
+      status: 'confirmed'
+    };
 
-  this.bookingService.addBooking(bookingData)
-    .subscribe({
+    this.bookingService.addBooking(bookingData).subscribe({
 
-      next: (response: any) => {
+      next: () => {
 
-        console.log("✅ POST Success Response:", response);
-
-        this.showToast("✅ Booking Added Successfully (Status: 201)");
+        this.showToast("✅ Booking Added Successfully");
 
         form.resetForm({
           name: this.booking.name,
@@ -157,38 +132,20 @@ export class BookingComponent implements OnInit {
         this.totalAmount = 0;
       },
 
-      error: (error) => {
-
-        console.log("❌ POST Error:", error);
-
-        this.showToast("❌ Booking Failed (Status: 400)");
+      error: () => {
+        this.showToast("❌ Booking Failed");
       }
 
     });
 
-  this.showDialog = false;
-}
-  // =========================
-  // Cancel Booking
-  // =========================
-  cancelBooking() {
-
-    const response = {
-      status: 400,
-      success: false,
-      message: "Booking Cancelled by User"
-    };
-
-    console.log("Cancel Response:", response);
-
     this.showDialog = false;
-
-    this.showToast(`❌ ${response.message} (Status: ${response.status})`);
   }
 
-  // =========================
-  // Login Dialog Actions
-  // =========================
+  cancelBooking() {
+    this.showDialog = false;
+    this.showToast("❌ Booking Cancelled");
+  }
+
   goToLogin() {
     this.router.navigate(['/signin']);
   }
@@ -198,9 +155,6 @@ export class BookingComponent implements OnInit {
     this.router.navigate(['/destinations']);
   }
 
-  // =========================
-  // Toast Message
-  // =========================
   showToast(message: string) {
 
     this.toastMessage = message;

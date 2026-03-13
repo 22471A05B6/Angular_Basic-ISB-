@@ -1,0 +1,93 @@
+<div class="contact-container">
+
+  <h1 class="contact-title">Contact Us</h1>
+  <p class="contact-subtitle">
+    Have questions about destinations or bookings? Send us a message.
+  </p>
+
+  <div class="contact-wrapper">
+
+    <!-- LEFT SIDE INFO -->
+    <div class="contact-info">
+
+      <div class="info-card">
+        <i class="fas fa-map-marker-alt"></i>
+        <div>
+          <h3>Location</h3>
+          <p>Guntur, Andhra Pradesh, India</p>
+        </div>
+      </div>
+
+      <div class="info-card">
+        <i class="fas fa-phone"></i>
+        <div>
+          <h3>Phone</h3>
+          <p>+91 98765 43210</p>
+        </div>
+      </div>
+
+      <div class="info-card">
+        <i class="fas fa-envelope"></i>
+        <div>
+          <h3>Email</h3>
+          <p>support&#64;travelexplorer.com</p>
+        </div>
+      </div>
+
+      <!-- SOCIAL ICONS -->
+      <div class="social-links">
+        <a href="https://www.facebook.com/"><i class="fab fa-facebook"></i></a>
+        <a href="https://www.instagram.com/"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.twitter.com/"><i class="fab fa-twitter"></i></a>
+        <a href="https://www.youtube.com/"><i class="fab fa-youtube"></i></a>
+      </div>
+
+    </div>
+
+
+    <!-- RIGHT SIDE FORM -->
+    <div class="contact-form">
+
+      <form #contactForm="ngForm" (ngSubmit)="submitForm(contactForm)">
+
+        <div class="input-group">
+          <label>Your Name</label>
+          <input
+          type="text"
+          name="name"
+          ngModel
+          required
+          placeholder="Enter your name">
+        </div>
+
+        <div class="input-group">
+          <label>Email Address</label>
+          <input
+          type="email"
+          name="email"
+          ngModel
+          required
+          placeholder="Enter your email">
+        </div>
+
+        <div class="input-group">
+          <label>Your Message</label>
+          <textarea
+          name="message"
+          ngModel
+          required
+          rows="5"
+          placeholder="Write your message"></textarea>
+        </div>
+
+        <button type="submit" class="send-btn">
+          Send Message
+        </button>
+
+      </form>
+
+    </div>
+
+  </div>
+
+</div>

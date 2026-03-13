@@ -243,6 +243,71 @@
       "totalAmount": 15000,
       "bookingDate": "2026-03-09T13:31:39.226Z",
       "status": "confirmed"
+    },
+    {
+      "id": "03d3",
+      "name": "Hashmi",
+      "email": "hashmi@gmail.com",
+      "phone": "9876543210",
+      "destination": "Lakshadweep",
+      "date": "2026-03-14",
+      "persons": 2,
+      "pricePerPerson": 18000,
+      "totalAmount": 36000,
+      "bookingDate": "2026-03-12T11:54:47.801Z",
+      "status": "confirmed"
+    },
+    {
+      "id": "b174",
+      "name": "Hashmi",
+      "email": "hashmi@gmail.com",
+      "phone": "9234567898",
+      "destination": "Lakshadweep",
+      "date": "2026-03-13",
+      "persons": 2,
+      "pricePerPerson": 18000,
+      "totalAmount": 36000,
+      "bookingDate": "2026-03-12T11:57:26.515Z",
+      "status": "confirmed"
+    },
+    {
+      "id": "6dfc",
+      "name": "Hashmi",
+      "email": "hashmi@gmail.com",
+      "phone": "9876543210",
+      "destination": "Kodaikanal",
+      "date": "2026-03-14",
+      "persons": 1,
+      "pricePerPerson": 7500,
+      "totalAmount": 7500,
+      "bookingDate": "2026-03-12T11:58:37.307Z",
+      "status": "confirmed"
+    },
+    {
+      "id": "657e",
+      "name": "Hashmi",
+      "email": "hashmi@gmail.com",
+      "phone": "9876543210",
+      "destination": "Kodaikanal",
+      "date": "2026-03-14",
+      "persons": 1,
+      "pricePerPerson": 7500,
+      "totalAmount": 7500,
+      "bookingDate": "2026-03-12T11:58:37.307Z",
+      "status": "confirmed"
+    },
+    {
+      "id": "42b6",
+      "name": "Hashmi",
+      "email": "hashmi@gmail.com",
+      "phone": "9876543210",
+      "destination": "Kodaikanal",
+      "date": "2026-03-14",
+      "persons": 1,
+      "pricePerPerson": 7500,
+      "totalAmount": 7500,
+      "bookingDate": "2026-03-12T11:58:37.307Z",
+      "status": "confirmed"
     }
   ]
 }
