@@ -6,6 +6,8 @@
   display: flex;
   min-height: 100vh;
   background: #f8f9fb;
+
+  margin-top: 75px;   /* push content below navbar */
 }
 
 .cards-wrapper {

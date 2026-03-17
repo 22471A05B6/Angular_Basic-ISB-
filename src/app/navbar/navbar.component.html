@@ -1,4 +1,5 @@
 <nav class="navbar">
+
   <div class="logo">GrandEscape</div>
 
   <!-- HAMBURGER -->
@@ -12,8 +13,14 @@
   <ul [class.open]="menuOpen">
 
     <li>
-      <a routerLink="/" routerLinkActive="active" (click)="closeMenu()">Home</a>
-    </li>
+  <a 
+    routerLink="/" 
+    routerLinkActive="active"
+    [routerLinkActiveOptions]="{ exact: true }"
+    (click)="closeMenu()">
+    Home
+  </a>
+</li>
 
     <li>
       <a routerLink="/dst" routerLinkActive="active" (click)="closeMenu()">Destinations</a>
@@ -26,6 +33,7 @@
     <li>
       <a routerLink="/booking" routerLinkActive="active" (click)="closeMenu()">Booking</a>
     </li>
+
     <li>
       <a routerLink="/Analytics" routerLinkActive="active" (click)="closeMenu()">Analytics</a>
     </li>
@@ -35,6 +43,7 @@
       <li>
         <a routerLink="/signin" routerLinkActive="active" (click)="closeMenu()">Login</a>
       </li>
+
       <li>
         <a routerLink="/signup" routerLinkActive="active" (click)="closeMenu()">Register</a>
       </li>
@@ -42,7 +51,9 @@
 
     <!-- LOGGED IN -->
     <ng-container *ngIf="user">
+
       <li class="profile-li">
+
         <div class="profile-wrapper">
 
           <div class="profile-circle" (click)="toggleProfileMenu($event)">
@@ -56,8 +67,11 @@
           </div>
 
         </div>
+
       </li>
+
     </ng-container>
 
   </ul>
+
 </nav>

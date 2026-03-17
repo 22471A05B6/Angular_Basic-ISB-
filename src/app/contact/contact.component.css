@@ -2,7 +2,7 @@
 
 .contact-container{
   min-height:100vh;
-  padding:3px 8%;   /* reduced from 80px */
+  padding:50px 8%;   /* reduced from 80px */
   background:linear-gradient(135deg,#f0f9ff,#e0f2fe);
 }
 
@@ -137,4 +137,86 @@
     grid-template-columns:1fr;
   }
 
+}
+/* =========================
+   DIALOG POPUP
+========================= */
+
+.dialog-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.6);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:1000;
+}
+
+.dialog-box{
+  background:white;
+  padding:30px;
+  border-radius:12px;
+  width:300px;
+  text-align:center;
+  box-shadow:0 15px 35px rgba(0,0,0,0.3);
+  animation:popup 0.3s ease;
+}
+
+.dialog-buttons{
+  margin-top:20px;
+  display:flex;
+  justify-content:space-between;
+}
+
+.confirm-btn{
+  background:#28a745;
+  color:white;
+  border:none;
+  padding:8px 16px;
+  border-radius:6px;
+  cursor:pointer;
+}
+
+.cancel-btn{
+  background:#dc3545;
+  color:white;
+  border:none;
+  padding:8px 16px;
+  border-radius:6px;
+  cursor:pointer;
+}
+
+@keyframes popup{
+  from{
+    transform:scale(0.8);
+    opacity:0;
+  }
+  to{
+    transform:scale(1);
+    opacity:1;
+  }
+}
+/* TOAST */
+
+.toast{
+  position:fixed;
+  bottom:30px;
+  right:30px;
+  background:linear-gradient(135deg,#00c851,#00ff88);
+  color:white;
+  padding:14px 20px;
+  border-radius:8px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.3);
+  animation:toast 0.5s ease;
+}
+
+@keyframes toast{
+  from{
+    transform:translateX(100px);
+    opacity:0;
+  }
+  to{
+    transform:translateX(0);
+    opacity:1;
+  }
 }

@@ -4,9 +4,14 @@
   align-items: center;
   justify-content: space-between;
   background: rgba(5, 151, 248, 0.95);
+
   padding: 20px clamp(20px, 6vw, 80px);
-  position: sticky;
+
+  position: fixed;
   top: 0;
+  left: 0;       /* start from left */
+  width: 90%;   /* full horizontal width */
+
   z-index: 2000;
 }
 

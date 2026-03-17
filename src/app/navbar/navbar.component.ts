@@ -19,50 +19,49 @@ export class NavbarComponent implements OnInit {
 
   constructor(private auth: AuthService, private router: Router) {}
 
-  ngOnInit() {
+  ngOnInit(){
     this.loadUser();
 
-    // 🔥 Update navbar automatically on route change
     this.router.events
-      .pipe(filter(event => event instanceof NavigationEnd))
-      .subscribe(() => {
-        this.loadUser();
-      });
+    .pipe(filter(event => event instanceof NavigationEnd))
+    .subscribe(()=>{
+      this.loadUser();
+    });
   }
 
-  loadUser() {
+  loadUser(){
     this.user = this.auth.getCurrentUser();
   }
 
-  toggleMenu() {
+  toggleMenu(){
     this.menuOpen = !this.menuOpen;
   }
 
-  closeMenu() {
+  closeMenu(){
     this.menuOpen = false;
   }
 
-  toggleProfileMenu(event: Event) {
+  toggleProfileMenu(event:Event){
     event.stopPropagation();
     this.profileMenuOpen = !this.profileMenuOpen;
   }
 
-  goToProfile() {
+  goToProfile(){
     this.router.navigate(['/dashboard']);
-    this.profileMenuOpen = false;
+    this.profileMenuOpen=false;
   }
 
-  logout() {
+  logout(){
     this.auth.logout();
-    this.user = null;              // 🔥 Important
-    this.profileMenuOpen = false;
-    this.menuOpen = false;
+    this.user=null;
+    this.profileMenuOpen=false;
+    this.menuOpen=false;
     this.router.navigate(['/signin']);
   }
 
-  // Close profile dropdown when clicking outside
   @HostListener('document:click')
-  closeProfileOnOutsideClick() {
-    this.profileMenuOpen = false;
+  closeProfile(){
+    this.profileMenuOpen=false;
   }
+
 }

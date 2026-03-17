@@ -52,8 +52,8 @@ export class SigninComponent {
       form.resetForm();
 
       setTimeout(() => {
-        this.router.navigate(['/analytics']);
-      }, 1500);
+  this.router.navigate(['/dashboard']);
+}, 1500);
 
     } else {
 

@@ -1,22 +1,42 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-contact',
-  imports: [FormsModule],
+  standalone: true,
+  imports: [FormsModule,CommonModule],
   templateUrl: './contact.component.html',
-  styleUrl: './contact.component.css'
+  styleUrls: ['./contact.component.css']
 })
 export class ContactComponent {
-  submitForm(form:any){
 
-    if(form.valid){
+  showDialog = false;
+  formData: any;
 
-      alert("Message Sent Successfully!");
+  // ✅ ADD THIS
+  toastMessage: string = '';
 
-      form.reset();
-
+  submitForm(form: any) {
+    if (form.valid) {
+      this.formData = form;
+      this.showDialog = true;
     }
   }
 
+  confirmSend() {
+    this.toastMessage = "Message Sent Successfully! ✅";
+
+    this.formData.reset();
+    this.showDialog = false;
+
+    // auto hide toast
+    setTimeout(() => {
+      this.toastMessage = '';
+    }, 3000);
+  }
+
+  cancelSend() {
+    this.showDialog = false;
+  }
 }

@@ -89,5 +89,27 @@
     </div>
 
   </div>
+<!-- CONFIRMATION DIALOG -->
+<div class="dialog-overlay" *ngIf="showDialog">
+  <div class="dialog-box">
 
+    <h2>Confirm Message</h2>
+    <p>Do you want to send this message?</p>
+
+    <div class="dialog-buttons">
+      <button class="confirm-btn" (click)="confirmSend()">
+        Send
+      </button>
+
+      <button class="cancel-btn" (click)="cancelSend()">
+        Cancel
+      </button>
+    </div>
+
+  </div>
+</div>
+<!-- TOAST MESSAGE -->
+<div class="toast" *ngIf="toastMessage">
+  {{ toastMessage }}
+</div>
 </div>

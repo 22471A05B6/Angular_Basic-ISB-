@@ -198,6 +198,14 @@
   border-radius:6px;
   cursor:pointer;
 }
+.cancel-btn{
+  background:#dc3545;
+  border:none;
+  color:white;
+  padding:8px 16px;
+  border-radius:6px;
+  cursor:pointer;
+}
 
 .confirm-btn:hover,
 .cancel-booking-btn:hover{
@@ -298,4 +306,23 @@
     transform:translateX(0);
     opacity:1;
   }
+}
+/* RESPONSIVE DESIGN */
+@media (max-width: 768px){
+
+  .booking-page{
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .booking-card{
+    width: 100%;
+    max-width: 420px;
+  }
+
+  .summary-card{
+    width: 100%;
+    max-width: 420px;
+  }
+
 }
